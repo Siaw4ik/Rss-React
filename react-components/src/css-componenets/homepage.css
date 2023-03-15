@@ -49,7 +49,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
   text-align: center;
+  position: relative;
+}
+
+.card-description {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .image-product{
@@ -73,18 +82,64 @@
 .price-product{
   width: 100%;
 }
-
-.price-product,
+.price-product{
+  margin: 0;
+}
 .rate-product,
 .count-product{
   margin: 0;
+  display: none;
+}
+
+.rating-product {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  height: 22px;
+}
+
+.rate-product.active,
+.count-product.active {
+  display: block;
+}
+
+.show-details {
+  border-radius: 5px;
+  background-color: #73818c;
+  width: 109px;
+  padding: 3px 10px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.show-details:hover {
+  background-color: #598fbc;
 }
 
 .total-description-product {
-  padding: 0 5px 10px 0;
+  padding: 0 10px 10px 10px;
   box-sizing: border-box;
   width: 100%;
 } 
+
+.likeHeart {
+  cursor: pointer;
+}
+
+.likeHeart.active {
+  fill: #2480cb;
+}
+
+/* .wrapper-like {
+  position: absolute;
+  bottom: 32px;
+  left: 0;
+  right: 0;
+} */
 
  @media (max-width: 1400px){
   .container_home{
@@ -110,6 +165,10 @@
 }
 
 @media (max-width: 800px){
+  .searchBar {
+    width: 80%;
+  }
+
   .title-product,
   .price-product,
   .rate-product,
@@ -128,6 +187,9 @@
 }
 
 @media (max-width: 550px){
+  .searchBar {
+    width: 90%;
+  }
   .image-product{
     width: 120px;
     height: 120px;
