@@ -8,6 +8,7 @@ import { Footer } from 'components/Footer';
 
 import './App.css';
 import '../src/css-componenets/header-footer.css';
+import '../src/css-componenets/homepage.css';
 
 class App extends Component {
   render() {

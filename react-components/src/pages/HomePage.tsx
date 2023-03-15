@@ -1,13 +1,15 @@
+import { CardList } from 'components/Card';
 import React, { Component } from 'react';
-/* import { Link } from 'react-router-dom';
-import logo from '../assets/logo-store.png'; */
+// import { Link } from 'react-router-dom';
+import glass from '../assets/search_glass.png';
 
 export class HomePage extends Component {
   render() {
     return (
-      <div>
-        <h1>homepage</h1>
+      <div className="container_home">
+        <h2>Store</h2>
         <SearchBar />
+        <CardList />
       </div>
     );
   }
@@ -16,12 +18,10 @@ export class HomePage extends Component {
 class SearchBar extends Component {
   render() {
     return (
-      <div>
-        <form>
-          <p></p>
-          <input type="text" placeholder="Search..." />
-        </form>
-      </div>
+      <form className="searchBar">
+        <input type="text" placeholder="Search..." />
+        <img className="searchGlass" src={glass} alt="search image" />
+      </form>
     );
   }
 }
