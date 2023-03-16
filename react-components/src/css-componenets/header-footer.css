@@ -49,4 +49,24 @@
 .footer_description p {
   margin: 0;
   text-align: center;
+  white-space: nowrap;
+}
+
+@media (max-width: 400px){
+  .footer {
+    gap: 20px;
+  }
+
+  .githubIcon {
+    width: 30px;
+    height: 30px;
+  }
+
+  .rssIcon {
+    width: 60px;
+  }
+
+  .footer_description p {
+    font-size: 14px;
+  }
 }

@@ -1,4 +1,4 @@
-export function searchIdLocalStorage(id: number) {
+export function searchIdLocalStorage(id: number): boolean {
   const likes: Array<{ id: number; isLike: boolean }> = JSON.parse(
     localStorage.getItem('likes') || '[]'
   );
