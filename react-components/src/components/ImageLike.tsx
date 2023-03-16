@@ -34,7 +34,7 @@ export class ImageLike extends Component<IdProps, LikeState> {
     return (
       <div className="like-image">
         <svg
-		data-testid='like-image'
+          data-testid="like-image"
           fill="#73818c"
           width="32px"
           height="32px"

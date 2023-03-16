@@ -5,7 +5,7 @@ import logo from '../assets/logo-store.png';
 export class Header extends Component {
   render() {
     return (
-      <header className="header">
+      <header data-testid="header" className="header">
         <div>
           <Link to="/" className="logo">
             <img className="logo" src={logo} alt="" />

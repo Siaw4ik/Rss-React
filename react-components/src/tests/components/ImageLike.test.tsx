@@ -1,6 +1,6 @@
 import React from 'react';
 import { unmountComponentAtNode } from 'react-dom';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import '@testing-library/jest-dom';
 import 'jest';
@@ -21,17 +21,38 @@ afterEach(() => {
   }
 });
 
-const mockId = 2;
+type Likes = { id: number; isLike: boolean }[];
 
-describe('test like image', () => {
-  it('renders like image', () => {
-    render(<ImageLike id={mockId} />);
+describe('ImageLike component', () => {
+  it('should toggle the like button when clicked', () => {
+    const mockId = 2;
+    localStorage.setItem('likes', '[]');
+    const { getByTestId } = render(<ImageLike id={mockId} />);
+    const likeButton = getByTestId('like-image');
 
-    const likeImage = screen.getByTestId('like-image');
+    expect(likeButton).not.toHaveClass('active');
+    fireEvent.click(likeButton);
+    expect(likeButton).toHaveClass('active');
+  });
 
+  it('should toggle like state when clicking on the heart icon', () => {
+    const { getByTestId } = render(<ImageLike id={1} />);
+    const likeImage = getByTestId('like-image');
     fireEvent.click(likeImage);
+    expect(likeImage.classList.contains('active')).toBe(true);
+    fireEvent.click(likeImage);
+    expect(likeImage.classList.contains('active')).toBe(false);
+  });
 
-    expect(likeImage).toHaveClass('active');
-
+  it('should update local storage when toggling like state', () => {
+    localStorage.clear();
+    const { getByTestId } = render(<ImageLike id={1} />);
+    const likeImage = getByTestId('like-image');
+    fireEvent.click(likeImage);
+    const likes: Likes = JSON.parse(localStorage.getItem('likes') || '[]');
+    expect(likes).toEqual([{ id: 1, isLike: true }]);
+    fireEvent.click(likeImage);
+    const updatedLikes: Likes = JSON.parse(localStorage.getItem('likes') || '[]');
+    expect(updatedLikes).toEqual([{ id: 1, isLike: false }]);
   });
 });
