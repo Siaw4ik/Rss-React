@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import logo from '../assets/logo-store.png';
 
 export class Header extends Component {
@@ -7,22 +7,44 @@ export class Header extends Component {
     return (
       <header data-testid="header" className="header">
         <div>
-          <Link to="/" className="logo">
+          <NavLink to="/" className="logo">
             <img className="logo" src={logo} alt="" />
-          </Link>
+          </NavLink>
         </div>
         <div className="wrapper_navigation">
           <nav className="navigation">
             <ul>
               <li>
-                <Link className="navigation_link" to="/">
+                <NavLink
+                  className="navigation_link"
+                  to="/"
+                  style={({ isActive }) =>
+                    isActive
+                      ? {
+                          textDecoration: 'none',
+                          color: 'gold',
+                        }
+                      : {}
+                  }
+                >
                   Home
-                </Link>
+                </NavLink>
               </li>
               <li>
-                <Link className="navigation_link" to="about">
+                <NavLink
+                  className="navigation_link"
+                  to="about"
+                  style={({ isActive }) =>
+                    isActive
+                      ? {
+                          textDecoration: 'none',
+                          color: 'gold',
+                        }
+                      : {}
+                  }
+                >
                   About
-                </Link>
+                </NavLink>
               </li>
             </ul>
           </nav>
