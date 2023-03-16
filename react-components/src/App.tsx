@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { HomePage } from 'pages/HomePage';
-import { AboutPage } from 'pages/AboutPage';
-import { NotFoundPage } from 'pages/NotFoundPage';
-import { Header } from 'components/Header';
-import { Footer } from 'components/Footer';
+import { HomePage } from './pages/HomePage';
+import { AboutPage } from './pages/AboutPage';
+import { NotFoundPage } from './pages/NotFoundPage';
+import { Header } from './components/Header';
+import { Footer } from './components/Footer';
 
 import './App.css';
 import '../src/css-componenets/header-footer.css';

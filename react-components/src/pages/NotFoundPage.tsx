@@ -4,7 +4,7 @@ export class NotFoundPage extends Component {
   render() {
     return (
       <div>
-        <h1>This is the 404 page</h1>
+        <h1 data-testid="404page-h1">This is the 404 page</h1>
       </div>
     );
   }

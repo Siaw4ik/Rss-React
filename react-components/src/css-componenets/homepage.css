@@ -88,7 +88,7 @@
 .rate-product,
 .count-product{
   margin: 0;
-  display: none;
+  display: block;
 }
 
 .rating-product {
@@ -97,11 +97,6 @@
   justify-content: space-between;
   margin-bottom: 5px;
   height: 22px;
-}
-
-.rate-product.active,
-.count-product.active {
-  display: block;
 }
 
 .show-details {

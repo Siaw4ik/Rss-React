@@ -22,7 +22,8 @@
     "fix": "eslint --ext .tsx,.ts src/ --fix",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest",
+    "coverage": "npm test -- --coverage --collectCoverageFrom='./src/components/**/*.{ts,tsx}' --collectCoverageFrom='./src/pages/**/*.{ts,tsx}' --collectCoverageFrom='src/**/*.tsx'",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

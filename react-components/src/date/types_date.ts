@@ -11,3 +11,18 @@ export interface Product {
   };
   like?: boolean;
 }
+
+export interface ProductProps {
+  product: Product;
+}
+
+export interface ShowState {
+  isActive: boolean;
+}
+
+export interface IdProps {
+  id: number;
+}
+export interface LikeState {
+  isLike: boolean;
+}
