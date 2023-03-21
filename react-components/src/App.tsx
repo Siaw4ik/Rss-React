@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import { HomePage } from './pages/HomePage';
 import { AboutPage } from './pages/AboutPage';
 import { NotFoundPage } from './pages/NotFoundPage';
+import { FormsPage } from './pages/FormsPage';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 
@@ -20,6 +21,7 @@ class App extends Component {
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/about" element={<AboutPage />} />
+              <Route path="/forms" element={<FormsPage />} />
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </main>

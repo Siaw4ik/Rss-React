@@ -46,6 +46,22 @@ export class Header extends Component {
                   About
                 </NavLink>
               </li>
+              <li>
+                <NavLink
+                  className="navigation_link"
+                  to="forms"
+                  style={({ isActive }) =>
+                    isActive
+                      ? {
+                          textDecoration: 'none',
+                          color: 'gold',
+                        }
+                      : {}
+                  }
+                >
+                  Add Product
+                </NavLink>
+              </li>
             </ul>
           </nav>
         </div>
