@@ -1,17 +1,26 @@
 import React, { ChangeEvent, Component } from 'react';
 import glass from '../assets/search_glass.png';
 
-export class SearchBar extends Component {
-  state = {
-    inputValue: '',
-  };
+interface SearchBarProps {
+  handleChange?: () => void;
+}
 
-  componentDidMount() {
+interface SearchBarState {
+  inputValue: string;
+}
+
+export class SearchBar extends Component<SearchBarProps, SearchBarState> {
+  constructor(props: SearchBarProps) {
+    super(props);
     const value = localStorage.getItem('searchInput');
-    if (value && typeof value === 'string') {
-      const parseValue = JSON.parse(value);
-      this.setState({ inputValue: parseValue });
-    }
+    this.state = {
+      inputValue: value ? JSON.parse(value) : '',
+    };
+  }
+
+  componentWillUnmount() {
+    const { inputValue } = this.state;
+    localStorage.setItem('searchInput', JSON.stringify(inputValue));
   }
 
   handleChange = (event: ChangeEvent<HTMLInputElement>) => {
