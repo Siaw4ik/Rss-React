@@ -1,5 +1,5 @@
 import { Product } from './types_date';
-const dateProducts: Product[] = [
+export const dateProducts: Product[] = [
   {
     id: 1,
     title: 'Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops',
@@ -262,8 +262,3 @@ const dateProducts: Product[] = [
     },
   },
 ];
-
-export const changedateProducts = dateProducts.map((product) => {
-  product.like = false;
-  return product;
-});

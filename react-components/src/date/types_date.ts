@@ -9,7 +9,6 @@ export interface Product {
     rate: number;
     count: number;
   };
-  like?: boolean;
 }
 
 export interface ProductProps {
@@ -25,4 +24,19 @@ export interface IdProps {
 }
 export interface LikeState {
   isLike: boolean;
+}
+
+export type ProductForm = {
+  title: string;
+  description: string;
+  date: string;
+  category: string;
+  presence: string;
+  count: number | string;
+  price: number | string;
+  image: string;
+};
+
+export interface CardFormProps {
+  product: ProductForm;
 }
