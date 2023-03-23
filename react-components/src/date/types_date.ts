@@ -34,7 +34,8 @@ export type ProductForm = {
   presence: string;
   count: number | string;
   price: number | string;
-  image: string;
+  consent: string;
+  image: string | undefined;
 };
 
 export interface CardFormProps {

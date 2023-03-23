@@ -71,6 +71,24 @@
   width: 50px;
 }
 
+.wrapper_checkbox {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-around;
+}
+
+.wrapper_checkbox p {
+  margin: 0;
+}
+
+.wrapper_checkbox div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
 .btnForm {
   background-color: #385c78;
   border-radius: 5px;
