@@ -41,3 +41,20 @@ export type ProductForm = {
 export interface CardFormProps {
   product: ProductForm;
 }
+
+export interface FormState {
+  titleError: string;
+  descriptionError: string;
+  dateError: string;
+  categoryError: string;
+  presenceError: string;
+  priceError: string;
+  countError: string;
+  consentError: string;
+  imageError: string;
+}
+
+export interface FormProps {
+  addProduct: (product: ProductForm) => void;
+  showModalWindow: () => void;
+}

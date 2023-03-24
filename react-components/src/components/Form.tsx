@@ -1,14 +1,7 @@
-import { ProductForm } from '../date/types_date';
+import { FormState, FormProps } from '../date/types_date';
 import React, { Component, RefObject, ChangeEvent } from 'react';
-
-interface FormProps {
-  addProduct: (product: ProductForm) => void;
-  showModalWindow: () => void;
-}
-
-interface FormState {
-  pictureUrl?: string;
-}
+import { resetInputRefForm } from './resetInputRefForm';
+import { validateForms } from './ValidateForm';
 
 export class Form extends Component<FormProps, FormState> {
   productNameRef: RefObject<HTMLInputElement>;
@@ -37,10 +30,76 @@ export class Form extends Component<FormProps, FormState> {
     this.pictureRef = React.createRef();
 
     this.handleSubmitForm = this.handleSubmitForm.bind(this);
+
+    this.state = {
+      titleError: '',
+      descriptionError: '',
+      dateError: '',
+      categoryError: '',
+      presenceError: '',
+      priceError: '',
+      countError: '',
+      consentError: '',
+      imageError: '',
+    };
   }
+
+  validateForm = () => {
+    const errors = validateForms(
+      this.productNameRef,
+      this.descriptionRef,
+      this.addedDateRef,
+      this.categoryRef,
+      this.availableRef,
+      this.unavailableRef,
+      this.priceRef,
+      this.countRef,
+      this.consentRef,
+      this.pictureRef
+    );
+
+    const {
+      titleError,
+      descriptionError,
+      dateError,
+      countError,
+      priceError,
+      categoryError,
+      presenceError,
+      consentError,
+      imageError,
+    } = errors;
+
+    this.setState({
+      titleError,
+      descriptionError,
+      dateError,
+      countError,
+      priceError,
+      categoryError,
+      presenceError,
+      consentError,
+      imageError,
+    });
+    return (
+      !titleError &&
+      !descriptionError &&
+      !dateError &&
+      !countError &&
+      !priceError &&
+      !categoryError &&
+      !presenceError &&
+      !consentError &&
+      !imageError
+    );
+  };
 
   handleSubmitForm(event: ChangeEvent<HTMLFormElement>) {
     event.preventDefault();
+
+    if (!this.validateForm()) {
+      return;
+    }
 
     const titleValue = this.productNameRef.current?.value || '';
     const descriptionValue = this.descriptionRef.current?.value || '';
@@ -77,45 +136,59 @@ export class Form extends Component<FormProps, FormState> {
       this.props.showModalWindow();
     }, 1000);
 
-    if (this.productNameRef.current) this.productNameRef.current.value = '';
-    if (this.descriptionRef.current) this.descriptionRef.current.value = '';
-    if (this.addedDateRef.current) this.addedDateRef.current.value = '';
-    if (this.categoryRef.current) this.categoryRef.current.value = '';
-    if (this.priceRef.current) this.priceRef.current.value = '';
-    if (this.countRef.current) this.countRef.current.value = '';
-    if (this.availableRef.current) this.availableRef.current.checked = false;
-    if (this.unavailableRef.current) this.unavailableRef.current.checked = false;
-    if (this.consentRef.current) this.consentRef.current.checked = false;
-    if (this.pictureRef.current) this.pictureRef.current.value = '';
+    this.handleClickReset();
   }
+
+  handleClickReset = () => {
+    resetInputRefForm(
+      this.productNameRef,
+      this.descriptionRef,
+      this.addedDateRef,
+      this.categoryRef,
+      this.availableRef,
+      this.unavailableRef,
+      this.priceRef,
+      this.countRef,
+      this.consentRef,
+      this.pictureRef
+    );
+  };
+
   render() {
     return (
       <form className="wrapper_form" onSubmit={this.handleSubmitForm}>
         <div className="forms_div">
           <p className="forms_div-title">Name of product</p>
           <input type="text" ref={this.productNameRef} />
+          {this.state.titleError && <span className="error">{this.state.titleError}</span>}
         </div>
 
         <div className="forms_div-column">
           <p className="forms_div-title">Description of product</p>
           <textarea ref={this.descriptionRef} cols={40} rows={2} />
+          {this.state.descriptionError && (
+            <span className="error">{this.state.descriptionError}</span>
+          )}
         </div>
 
         <div className="forms_div">
           <div className="forms_div form-price">
             <p className="forms_div-title">Price</p>
             <input type="number" ref={this.priceRef} />
+            {this.state.priceError && <span className="error">{this.state.priceError}</span>}
           </div>
 
           <div className="forms_div form-count">
             <p className="forms_div-title">Count</p>
             <input type="number" ref={this.countRef} />
+            {this.state.countError && <span className="error">{this.state.countError}</span>}
           </div>
         </div>
 
         <div className="forms_div">
           <p className="forms_div-title">Date of added product</p>
-          <input type="date" ref={this.addedDateRef} />
+          <input type="date" ref={this.addedDateRef} lang="en" />
+          {this.state.dateError && <span className="error">{this.state.dateError}</span>}
         </div>
 
         <div className="forms_div">
@@ -128,7 +201,9 @@ export class Form extends Component<FormProps, FormState> {
             <option value="jewelery">Jewelery</option>
             <option value="another category">Another category</option>
           </select>
+          {this.state.categoryError && <span className="error">{this.state.categoryError}</span>}
         </div>
+
         <div className="forms_div-column">
           <p className="forms_div-title">Product availability</p>
           <div className="wrapper_radios">
@@ -146,10 +221,17 @@ export class Form extends Component<FormProps, FormState> {
               />
             </div>
           </div>
+          {this.state.presenceError && <span className="error">{this.state.presenceError}</span>}
+        </div>
+
+        <div className="forms_div-column">
+          <p className="forms_div-title">Upload picture</p>
+          <input type="file" accept="image/*" ref={this.pictureRef} />
+          {this.state.imageError && <span className="error">{this.state.imageError}</span>}
         </div>
 
         <div className="forms_div">
-          <p>I consent to the processing of product data</p>
+          <p className="forms_div-title">I consent to the processing of product data</p>
           <input
             type="checkbox"
             name="gender"
@@ -157,13 +239,14 @@ export class Form extends Component<FormProps, FormState> {
             ref={this.consentRef}
             defaultChecked={false}
           />
+          {this.state.consentError && <span className="error">{this.state.consentError}</span>}
         </div>
-
-        <div className="forms_div-column">
-          <p className="forms_div-title">Upload picture</p>
-          <input type="file" accept="image/*" ref={this.pictureRef} />
+        <div className="forms_div buttons">
+          <div className="resetBtn" onClick={this.handleClickReset}>
+            Reset
+          </div>
+          <button /* type="submit" */ className="btnForm">Create product</button>
         </div>
-        <input type="submit" className="btnForm" value="Create product" />
       </form>
     );
   }
