@@ -17,7 +17,6 @@ export class FormsPage extends Component<FormPageProps, FormPageState> {
     this.setState((prevState) => ({
       products: [...prevState.products, product],
     }));
-    console.log(this.state.products);
   };
 
   showModalWindow = () => {
