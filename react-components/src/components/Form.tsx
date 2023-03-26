@@ -128,13 +128,12 @@ export class Form extends Component<FormProps, FormState> {
       consent: consentValue,
       image: imageValueUrl,
     };
-    console.log(product);
 
     this.props.addProduct(product);
     this.props.showModalWindow();
     setTimeout(() => {
       this.props.showModalWindow();
-    }, 1000);
+    }, 2000);
 
     this.handleClickReset();
   }
@@ -156,16 +155,16 @@ export class Form extends Component<FormProps, FormState> {
 
   render() {
     return (
-      <form className="wrapper_form" onSubmit={this.handleSubmitForm}>
+      <form className="wrapper_form" onSubmit={this.handleSubmitForm} data-testid="form">
         <div className="forms_div">
           <p className="forms_div-title">Name of product</p>
-          <input type="text" ref={this.productNameRef} />
+          <input data-testid="name-input" type="text" ref={this.productNameRef} />
           {this.state.titleError && <span className="error">{this.state.titleError}</span>}
         </div>
 
         <div className="forms_div-column">
           <p className="forms_div-title">Description of product</p>
-          <textarea ref={this.descriptionRef} cols={40} rows={2} />
+          <textarea data-testid="description-input" ref={this.descriptionRef} cols={40} rows={2} />
           {this.state.descriptionError && (
             <span className="error">{this.state.descriptionError}</span>
           )}
@@ -174,26 +173,31 @@ export class Form extends Component<FormProps, FormState> {
         <div className="forms_div">
           <div className="forms_div form-price">
             <p className="forms_div-title">Price</p>
-            <input type="number" ref={this.priceRef} />
+            <input data-testid="price-input" type="number" ref={this.priceRef} />
             {this.state.priceError && <span className="error">{this.state.priceError}</span>}
           </div>
 
           <div className="forms_div form-count">
             <p className="forms_div-title">Count</p>
-            <input type="number" ref={this.countRef} />
+            <input data-testid="count-input" type="number" ref={this.countRef} />
             {this.state.countError && <span className="error">{this.state.countError}</span>}
           </div>
         </div>
 
         <div className="forms_div">
           <p className="forms_div-title">Date of added product</p>
-          <input type="date" ref={this.addedDateRef} lang="en" />
+          <input data-testid="date-input" type="date" ref={this.addedDateRef} lang="en" />
           {this.state.dateError && <span className="error">{this.state.dateError}</span>}
         </div>
 
         <div className="forms_div">
           <p className="forms_div-title">Select product category</p>
-          <select name="category" ref={this.categoryRef} defaultValue="">
+          <select
+            data-testid="category-select"
+            name="category"
+            ref={this.categoryRef}
+            defaultValue=""
+          >
             <option value="">--Select category--</option>
             <option value="men's clothing">Men&#x60;s clothing</option>
             <option value="women's clothing">Women&#x60;s clothing</option>
@@ -209,7 +213,13 @@ export class Form extends Component<FormProps, FormState> {
           <div className="wrapper_radios">
             <div>
               <p>available</p>
-              <input type="radio" name="availability" value="available" ref={this.availableRef} />
+              <input
+                data-testid="presence-radio1"
+                type="radio"
+                name="availability"
+                value="available"
+                ref={this.availableRef}
+              />
             </div>
             <div>
               <p>unavailable</p>
@@ -217,6 +227,7 @@ export class Form extends Component<FormProps, FormState> {
                 type="radio"
                 name="availability"
                 value="unavailable"
+                data-testid="presence-radio2"
                 ref={this.unavailableRef}
               />
             </div>
@@ -226,7 +237,7 @@ export class Form extends Component<FormProps, FormState> {
 
         <div className="forms_div-column">
           <p className="forms_div-title">Upload picture</p>
-          <input type="file" accept="image/*" ref={this.pictureRef} />
+          <input data-testid="image-input" type="file" accept="image/*" ref={this.pictureRef} />
           {this.state.imageError && <span className="error">{this.state.imageError}</span>}
         </div>
 
@@ -236,6 +247,7 @@ export class Form extends Component<FormProps, FormState> {
             type="checkbox"
             name="gender"
             value="true"
+            data-testid="consent-check"
             ref={this.consentRef}
             defaultChecked={false}
           />
@@ -245,7 +257,9 @@ export class Form extends Component<FormProps, FormState> {
           <div className="resetBtn" onClick={this.handleClickReset}>
             Reset
           </div>
-          <button /* type="submit" */ className="btnForm">Create product</button>
+          <button /* type="submit" */ data-testid="button" className="btnForm">
+            Create product
+          </button>
         </div>
       </form>
     );

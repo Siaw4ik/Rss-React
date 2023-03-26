@@ -1,9 +1,5 @@
-import { CardFormProps } from 'date/types_date';
+import { CardFormProps, CardState } from 'date/types_date';
 import React, { Component } from 'react';
-
-interface CardState {
-  a?: string;
-}
 
 export class CardForm extends Component<CardFormProps, CardState> {
   constructor(props: CardFormProps) {

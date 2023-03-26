@@ -58,3 +58,16 @@ export interface FormProps {
   addProduct: (product: ProductForm) => void;
   showModalWindow: () => void;
 }
+
+export interface FormPageProps {
+  a?: string;
+}
+
+export interface FormPageState {
+  products: ProductForm[];
+  isActive: boolean;
+}
+
+export interface CardState {
+  a?: string;
+}

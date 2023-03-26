@@ -1,16 +1,5 @@
 import { RefObject } from 'react';
 
-/* export function validateTitle(productName: RefObject<HTMLInputElement>) {
-  let titleErrorValue = '';
-  const titleValue = productName.current?.value || '';
-  if (titleValue === '') {
-    titleErrorValue = 'Enter a value in the field';
-  } else if (titleValue[0] !== titleValue[0].toUpperCase()) {
-    titleErrorValue = 'Value must start with a capital letter';
-  }
-  return titleErrorValue;
-} */
-
 export function validateForms(
   productName: RefObject<HTMLInputElement>,
   description: RefObject<HTMLTextAreaElement>,
