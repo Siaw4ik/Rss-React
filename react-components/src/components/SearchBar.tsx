@@ -13,7 +13,9 @@ export function SearchBar() {
   const [value, setValue] = useState(getInputValueFormLocalStorage);
 
   useEffect(() => {
-    localStorage.setItem('searchInput', JSON.stringify(value));
+    return () => {
+      localStorage.setItem('searchInput', JSON.stringify(value));
+    };
   }, [value]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
