@@ -1,11 +1,15 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { Header } from '../components/Header';
+import { Footer } from '../components/Footer';
 
-export class AboutPage extends Component {
-  render() {
-    return (
-      <div>
+export function AboutPage() {
+  return (
+    <div className="container">
+      <Header />
+      <main className="main">
         <h1 data-testid="aboutpage-h1">This is the ABOUT page</h1>
-      </div>
-    );
-  }
+      </main>
+      <Footer />
+    </div>
+  );
 }
