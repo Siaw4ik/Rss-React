@@ -74,7 +74,10 @@ export function Form({ addProduct, showModalWindow }: FormProps) {
           <input
             data-testid="price-input"
             type="number"
-            {...register('price', { required: 'Enter a value in the field' })}
+            {...register('price', {
+              required: 'Enter a value in the field',
+              validate: (value) => value > 0 || 'Invalid value(> 0)',
+            })}
           />
           <span className="error">{errors.price && errors.price.message}</span>
         </div>
@@ -84,7 +87,10 @@ export function Form({ addProduct, showModalWindow }: FormProps) {
           <input
             data-testid="count-input"
             type="number"
-            {...register('count', { required: 'Enter a value in the field' })}
+            {...register('count', {
+              required: 'Enter a value in the field',
+              validate: (value) => value > 0 || 'Invalid value(> 0)',
+            })}
           />
           <span className="error">{errors.count && errors.count.message}</span>
         </div>
