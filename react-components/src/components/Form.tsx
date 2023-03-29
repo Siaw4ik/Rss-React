@@ -37,11 +37,6 @@ export function Form({ addProduct, showModalWindow }: FormProps) {
     };
     console.log(product);
     addProduct(product);
-    /* reset();
-    showModalWindow();
-    setTimeout(() => {
-      showModalWindow();
-    }, 2000); */
   };
 
   useEffect(() => {
