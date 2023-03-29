@@ -1,267 +1,200 @@
-import { FormState, FormProps } from '../date/types_date';
-import React, { Component, RefObject, ChangeEvent } from 'react';
-import { resetInputRefForm } from './resetInputRefForm';
-import { validateForms } from './ValidateForm';
+import { FormProps } from '../date/types_date';
+import React, { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 
-export class Form extends Component<FormProps, FormState> {
-  productNameRef: RefObject<HTMLInputElement>;
-  descriptionRef: RefObject<HTMLTextAreaElement>;
-  addedDateRef: RefObject<HTMLInputElement>;
-  categoryRef: RefObject<HTMLSelectElement>;
-  availableRef: RefObject<HTMLInputElement>;
-  unavailableRef: RefObject<HTMLInputElement>;
-  priceRef: RefObject<HTMLInputElement>;
-  countRef: RefObject<HTMLInputElement>;
-  consentRef: RefObject<HTMLInputElement>;
-  pictureRef: RefObject<HTMLInputElement>;
+type ProductforForm = {
+  name: string;
+  description: string;
+  price: number;
+  count: number;
+  date: string;
+  category: string;
+  availability: string;
+  consent: string;
+  image: FileList;
+};
 
-  constructor(props: FormProps) {
-    super(props);
+export function Form({ addProduct, showModalWindow }: FormProps) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitSuccessful },
+    reset,
+  } = useForm<ProductforForm>({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
 
-    this.productNameRef = React.createRef();
-    this.descriptionRef = React.createRef();
-    this.addedDateRef = React.createRef();
-    this.categoryRef = React.createRef();
-    this.availableRef = React.createRef();
-    this.unavailableRef = React.createRef();
-    this.priceRef = React.createRef();
-    this.countRef = React.createRef();
-    this.consentRef = React.createRef();
-    this.pictureRef = React.createRef();
-
-    this.handleSubmitForm = this.handleSubmitForm.bind(this);
-
-    this.state = {
-      titleError: '',
-      descriptionError: '',
-      dateError: '',
-      categoryError: '',
-      presenceError: '',
-      priceError: '',
-      countError: '',
-      consentError: '',
-      imageError: '',
-    };
-  }
-
-  validateForm = () => {
-    const errors = validateForms(
-      this.productNameRef,
-      this.descriptionRef,
-      this.addedDateRef,
-      this.categoryRef,
-      this.availableRef,
-      this.unavailableRef,
-      this.priceRef,
-      this.countRef,
-      this.consentRef,
-      this.pictureRef
-    );
-
-    const {
-      titleError,
-      descriptionError,
-      dateError,
-      countError,
-      priceError,
-      categoryError,
-      presenceError,
-      consentError,
-      imageError,
-    } = errors;
-
-    this.setState({
-      titleError,
-      descriptionError,
-      dateError,
-      countError,
-      priceError,
-      categoryError,
-      presenceError,
-      consentError,
-      imageError,
-    });
-    return (
-      !titleError &&
-      !descriptionError &&
-      !dateError &&
-      !countError &&
-      !priceError &&
-      !categoryError &&
-      !presenceError &&
-      !consentError &&
-      !imageError
-    );
-  };
-
-  handleSubmitForm(event: ChangeEvent<HTMLFormElement>) {
-    event.preventDefault();
-
-    if (!this.validateForm()) {
-      return;
-    }
-
-    const titleValue = this.productNameRef.current?.value || '';
-    const descriptionValue = this.descriptionRef.current?.value || '';
-    const dateValue = this.addedDateRef.current?.value || '';
-    const categoryValue = this.categoryRef.current?.value || '';
-    const availableChek = this.availableRef.current?.checked;
-    const availableValue = this.availableRef.current?.value || '';
-    const unavailableValue = this.unavailableRef.current?.value || '';
-    const priceValue = this.priceRef.current?.value || '';
-    const countValue = this.countRef.current?.value || '';
-    const consentValue = this.consentRef.current?.value || '';
-
-    let imageValueUrl;
-    if (this.pictureRef.current?.files !== undefined && this.pictureRef.current?.files) {
-      imageValueUrl = URL.createObjectURL(this.pictureRef.current?.files[0]);
-    }
-
+  const onSubmit = (data: ProductforForm) => {
+    console.log(data);
     const product = {
-      title: titleValue,
-      description: descriptionValue,
-      date: dateValue,
-      category: categoryValue,
-      presence: availableChek ? availableValue : unavailableValue,
-      price: priceValue,
-      count: countValue,
-      consent: consentValue,
-      image: imageValueUrl,
+      title: data.name,
+      description: data.description,
+      date: data.date,
+      category: data.category,
+      presence: data.availability,
+      count: data.count,
+      price: data.price,
+      consent: data.consent,
+      image: URL.createObjectURL(data.image[0]),
     };
-
-    this.props.addProduct(product);
-    this.props.showModalWindow();
+    console.log(product);
+    addProduct(product);
+    /* reset();
+    showModalWindow();
     setTimeout(() => {
-      this.props.showModalWindow();
-    }, 2000);
-
-    this.handleClickReset();
-  }
-
-  handleClickReset = () => {
-    resetInputRefForm(
-      this.productNameRef,
-      this.descriptionRef,
-      this.addedDateRef,
-      this.categoryRef,
-      this.availableRef,
-      this.unavailableRef,
-      this.priceRef,
-      this.countRef,
-      this.consentRef,
-      this.pictureRef
-    );
+      showModalWindow();
+    }, 2000); */
   };
 
-  render() {
-    return (
-      <form className="wrapper_form" onSubmit={this.handleSubmitForm} data-testid="form">
-        <div className="forms_div">
-          <p className="forms_div-title">Name of product</p>
-          <input data-testid="name-input" type="text" ref={this.productNameRef} />
-          {this.state.titleError && <span className="error">{this.state.titleError}</span>}
-        </div>
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      reset();
+      showModalWindow();
+      setTimeout(() => {
+        showModalWindow();
+      }, 2000);
+    }
+  }, [isSubmitSuccessful, reset, showModalWindow]);
 
-        <div className="forms_div-column">
-          <p className="forms_div-title">Description of product</p>
-          <textarea data-testid="description-input" ref={this.descriptionRef} cols={40} rows={2} />
-          {this.state.descriptionError && (
-            <span className="error">{this.state.descriptionError}</span>
-          )}
-        </div>
+  return (
+    <form className="wrapper_form" onSubmit={handleSubmit(onSubmit)} data-testid="form">
+      <div className="forms_div">
+        <p className="forms_div-title">Name of product</p>
+        <input
+          data-testid="name-input"
+          type="text"
+          {...register('name', {
+            required: 'Enter a value in the field',
+            validate: (value) =>
+              value[0] === value[0].toUpperCase() || 'Value must start with a capital letter',
+          })}
+        />
+        {errors.name && <span className="error">{errors.name.message}</span>}
+      </div>
 
-        <div className="forms_div">
-          <div className="forms_div form-price">
-            <p className="forms_div-title">Price</p>
-            <input data-testid="price-input" type="number" ref={this.priceRef} />
-            {this.state.priceError && <span className="error">{this.state.priceError}</span>}
-          </div>
+      <div className="forms_div-column">
+        <p className="forms_div-title">Description of product</p>
+        <textarea
+          data-testid="description-input"
+          {...register('description', {
+            required: 'Enter a value in the field',
+            validate: (value) => value.split(' ').length > 2 || 'Value must be at least 3 words',
+          })}
+          cols={40}
+          rows={2}
+        />
+        {errors.description && <span className="error">{errors.description.message}</span>}
+      </div>
 
-          <div className="forms_div form-count">
-            <p className="forms_div-title">Count</p>
-            <input data-testid="count-input" type="number" ref={this.countRef} />
-            {this.state.countError && <span className="error">{this.state.countError}</span>}
-          </div>
-        </div>
-
-        <div className="forms_div">
-          <p className="forms_div-title">Date of added product</p>
-          <input data-testid="date-input" type="date" ref={this.addedDateRef} lang="en" />
-          {this.state.dateError && <span className="error">{this.state.dateError}</span>}
-        </div>
-
-        <div className="forms_div">
-          <p className="forms_div-title">Select product category</p>
-          <select
-            data-testid="category-select"
-            name="category"
-            ref={this.categoryRef}
-            defaultValue=""
-          >
-            <option value="">--Select category--</option>
-            <option value="men's clothing">Men&#x60;s clothing</option>
-            <option value="women's clothing">Women&#x60;s clothing</option>
-            <option value="electronics">Electronics</option>
-            <option value="jewelery">Jewelery</option>
-            <option value="another category">Another category</option>
-          </select>
-          {this.state.categoryError && <span className="error">{this.state.categoryError}</span>}
-        </div>
-
-        <div className="forms_div-column">
-          <p className="forms_div-title">Product availability</p>
-          <div className="wrapper_radios">
-            <div>
-              <p>available</p>
-              <input
-                data-testid="presence-radio1"
-                type="radio"
-                name="availability"
-                value="available"
-                ref={this.availableRef}
-              />
-            </div>
-            <div>
-              <p>unavailable</p>
-              <input
-                type="radio"
-                name="availability"
-                value="unavailable"
-                data-testid="presence-radio2"
-                ref={this.unavailableRef}
-              />
-            </div>
-          </div>
-          {this.state.presenceError && <span className="error">{this.state.presenceError}</span>}
-        </div>
-
-        <div className="forms_div-column">
-          <p className="forms_div-title">Upload picture</p>
-          <input data-testid="image-input" type="file" accept="image/*" ref={this.pictureRef} />
-          {this.state.imageError && <span className="error">{this.state.imageError}</span>}
-        </div>
-
-        <div className="forms_div">
-          <p className="forms_div-title">I consent to the processing of product data</p>
+      <div className="forms_div">
+        <div className="forms_div form-price">
+          <p className="forms_div-title">Price</p>
           <input
-            type="checkbox"
-            name="gender"
-            value="true"
-            data-testid="consent-check"
-            ref={this.consentRef}
-            defaultChecked={false}
+            data-testid="price-input"
+            type="number"
+            {...register('price', { required: 'Enter a value in the field' })}
           />
-          {this.state.consentError && <span className="error">{this.state.consentError}</span>}
+          <span className="error">{errors.price && errors.price.message}</span>
         </div>
-        <div className="forms_div buttons">
-          <div className="resetBtn" onClick={this.handleClickReset}>
-            Reset
+
+        <div className="forms_div form-count">
+          <p className="forms_div-title">Count</p>
+          <input
+            data-testid="count-input"
+            type="number"
+            {...register('count', { required: 'Enter a value in the field' })}
+          />
+          <span className="error">{errors.count && errors.count.message}</span>
+        </div>
+      </div>
+
+      <div className="forms_div">
+        <p className="forms_div-title">Date of added product</p>
+        <input
+          data-testid="date-input"
+          type="date"
+          {...register('date', {
+            required: 'Enter a value in the field',
+            validate: (value) =>
+              value.split('-')[0] === String(new Date().getFullYear()) ||
+              'You entered the wrong year',
+          })}
+        />
+        <span className="error">{errors.date && errors.date.message}</span>
+      </div>
+
+      <div className="forms_div">
+        <p className="forms_div-title">Select product category</p>
+        <select
+          data-testid="category-select"
+          defaultValue=""
+          {...register('category', { required: 'Сhoose a value in the field' })}
+        >
+          <option value="">--Select category--</option>
+          <option value="men's clothing">Men&#x60;s clothing</option>
+          <option value="women's clothing">Women&#x60;s clothing</option>
+          <option value="electronics">Electronics</option>
+          <option value="jewelery">Jewelery</option>
+          <option value="another category">Another category</option>
+        </select>
+        <span className="error">{errors.category && errors.category.message}</span>
+      </div>
+
+      <div className="forms_div-column">
+        <p className="forms_div-title">Product availability</p>
+        <div className="wrapper_radios">
+          <div>
+            <p>available</p>
+            <input
+              data-testid="presence-radio1"
+              type="radio"
+              value="available"
+              {...register('availability', { required: 'Сhoose one of the values' })}
+            />
           </div>
-          <button /* type="submit" */ data-testid="button" className="btnForm">
-            Create product
-          </button>
+          <div>
+            <p>unavailable</p>
+            <input
+              type="radio"
+              value="unavailable"
+              data-testid="presence-radio2"
+              {...register('availability', { required: 'Сhoose one of the values' })}
+            />
+          </div>
         </div>
-      </form>
-    );
-  }
+        <span className="error">{errors.availability && errors.availability.message}</span>
+      </div>
+
+      <div className="forms_div-column">
+        <p className="forms_div-title">Upload picture</p>
+        <input
+          data-testid="image-input"
+          type="file"
+          accept="image/*"
+          {...register('image', { required: 'Upload a picture' })}
+        />
+        <span className="error">{errors.image && errors.image.message}</span>
+      </div>
+
+      <div className="forms_div">
+        <p className="forms_div-title">I consent to the processing of product data</p>
+        <input
+          type="checkbox"
+          value="true"
+          data-testid="consent-check"
+          defaultChecked={false}
+          {...register('consent', {
+            required: 'The product will not be added until you give permission',
+          })}
+        />
+        <span className="error">{errors.consent && errors.consent.message}</span>
+      </div>
+      <div className="forms_div buttons">
+        <div className="resetBtn" onClick={() => reset()}>
+          Reset
+        </div>
+        <button data-testid="button" className="btnForm">
+          Create product
+        </button>
+      </div>
+    </form>
+  );
 }
