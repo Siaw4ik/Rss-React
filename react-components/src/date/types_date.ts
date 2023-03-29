@@ -15,15 +15,8 @@ export interface ProductProps {
   product: Product;
 }
 
-export interface ShowState {
-  isActive: boolean;
-}
-
 export interface IdProps {
   id: number;
-}
-export interface LikeState {
-  isLike: boolean;
 }
 
 export type ProductForm = {
@@ -42,32 +35,19 @@ export interface CardFormProps {
   product: ProductForm;
 }
 
-export interface FormState {
-  titleError: string;
-  descriptionError: string;
-  dateError: string;
-  categoryError: string;
-  presenceError: string;
-  priceError: string;
-  countError: string;
-  consentError: string;
-  imageError: string;
-}
-
 export interface FormProps {
   addProduct: (product: ProductForm) => void;
   showModalWindow: () => void;
 }
 
-export interface FormPageProps {
-  a?: string;
-}
-
-export interface FormPageState {
-  products: ProductForm[];
-  isActive: boolean;
-}
-
-export interface CardState {
-  a?: string;
-}
+export type InputForm = {
+  name: string;
+  description: string;
+  price: number;
+  count: number;
+  date: string;
+  category: string;
+  availability: string;
+  consent: string;
+  image: FileList;
+};

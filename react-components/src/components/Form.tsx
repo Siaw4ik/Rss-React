@@ -1,18 +1,7 @@
 import { FormProps } from '../date/types_date';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-
-type ProductforForm = {
-  name: string;
-  description: string;
-  price: number;
-  count: number;
-  date: string;
-  category: string;
-  availability: string;
-  consent: string;
-  image: FileList;
-};
+import { InputForm } from '../date/types_date';
 
 export function Form({ addProduct, showModalWindow }: FormProps) {
   const {
@@ -20,9 +9,9 @@ export function Form({ addProduct, showModalWindow }: FormProps) {
     handleSubmit,
     formState: { errors, isSubmitSuccessful },
     reset,
-  } = useForm<ProductforForm>({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
+  } = useForm<InputForm>({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
 
-  const onSubmit = (data: ProductforForm) => {
+  const onSubmit = (data: InputForm) => {
     console.log(data);
     const product = {
       title: data.name,
