@@ -1,5 +1,5 @@
 import { FormProps } from '../date/types_date';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { InputForm } from '../date/types_date';
 
