@@ -28,7 +28,7 @@ export function FormsPage() {
           </div>
           <div className="container_createdCrads">
             <h3 data-testid="formpage-cardsformtitle">Created and added products</h3>
-            <div className="wrapper_cardList">
+            <div data-testid="containerCards" className="wrapper_cardList">
               {products.map((product, index) => (
                 <CardForm key={index} product={product} />
               ))}

@@ -7,12 +7,11 @@ export function Form({ addProduct, showModalWindow }: FormProps) {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitSuccessful },
+    formState: { errors },
     reset,
   } = useForm<InputForm>({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
 
   const onSubmit = (data: InputForm) => {
-    console.log(data);
     const product = {
       title: data.name,
       description: data.description,
@@ -24,19 +23,14 @@ export function Form({ addProduct, showModalWindow }: FormProps) {
       consent: data.consent,
       image: URL.createObjectURL(data.image[0]),
     };
-    console.log(product);
-    addProduct(product);
-  };
 
-  useEffect(() => {
-    if (isSubmitSuccessful) {
-      reset();
+    addProduct(product);
+    reset();
+    showModalWindow();
+    setTimeout(() => {
       showModalWindow();
-      setTimeout(() => {
-        showModalWindow();
-      }, 2000);
-    }
-  }, [isSubmitSuccessful, reset, showModalWindow]);
+    }, 2000);
+  };
 
   return (
     <form className="wrapper_form" onSubmit={handleSubmit(onSubmit)} data-testid="form">
@@ -51,7 +45,11 @@ export function Form({ addProduct, showModalWindow }: FormProps) {
               value[0] === value[0].toUpperCase() || 'Value must start with a capital letter',
           })}
         />
-        {errors.name && <span className="error">{errors.name.message}</span>}
+        {errors.name && (
+          <span className="error" role="alert">
+            {errors.name.message}
+          </span>
+        )}
       </div>
 
       <div className="forms_div-column">
@@ -65,7 +63,11 @@ export function Form({ addProduct, showModalWindow }: FormProps) {
           cols={40}
           rows={2}
         />
-        {errors.description && <span className="error">{errors.description.message}</span>}
+        {errors.description && (
+          <span className="error" role="alert">
+            {errors.description.message}
+          </span>
+        )}
       </div>
 
       <div className="forms_div">
@@ -79,7 +81,11 @@ export function Form({ addProduct, showModalWindow }: FormProps) {
               validate: (value) => value > 0 || 'Invalid value(> 0)',
             })}
           />
-          <span className="error">{errors.price && errors.price.message}</span>
+          {errors.price && (
+            <span className="error" role="alert">
+              {errors.price.message}
+            </span>
+          )}
         </div>
 
         <div className="forms_div form-count">
@@ -92,7 +98,11 @@ export function Form({ addProduct, showModalWindow }: FormProps) {
               validate: (value) => value > 0 || 'Invalid value(> 0)',
             })}
           />
-          <span className="error">{errors.count && errors.count.message}</span>
+          {errors.count && (
+            <span className="error" role="alert">
+              {errors.count.message}
+            </span>
+          )}
         </div>
       </div>
 
@@ -108,7 +118,11 @@ export function Form({ addProduct, showModalWindow }: FormProps) {
               'You entered the wrong year',
           })}
         />
-        <span className="error">{errors.date && errors.date.message}</span>
+        {errors.date && (
+          <span className="error" role="alert">
+            {errors.date.message}
+          </span>
+        )}
       </div>
 
       <div className="forms_div">
@@ -125,7 +139,11 @@ export function Form({ addProduct, showModalWindow }: FormProps) {
           <option value="jewelery">Jewelery</option>
           <option value="another category">Another category</option>
         </select>
-        <span className="error">{errors.category && errors.category.message}</span>
+        {errors.category && (
+          <span className="error" role="alert">
+            {errors.category.message}
+          </span>
+        )}
       </div>
 
       <div className="forms_div-column">
@@ -150,7 +168,11 @@ export function Form({ addProduct, showModalWindow }: FormProps) {
             />
           </div>
         </div>
-        <span className="error">{errors.availability && errors.availability.message}</span>
+        {errors.availability && (
+          <span className="error" role="alert">
+            {errors.availability.message}
+          </span>
+        )}
       </div>
 
       <div className="forms_div-column">
@@ -161,7 +183,11 @@ export function Form({ addProduct, showModalWindow }: FormProps) {
           accept="image/*"
           {...register('image', { required: 'Upload a picture' })}
         />
-        <span className="error">{errors.image && errors.image.message}</span>
+        {errors.image && (
+          <span className="error" role="alert">
+            {errors.image.message}
+          </span>
+        )}
       </div>
 
       <div className="forms_div">
@@ -175,10 +201,14 @@ export function Form({ addProduct, showModalWindow }: FormProps) {
             required: 'The product will not be added until you give permission',
           })}
         />
-        <span className="error">{errors.consent && errors.consent.message}</span>
+        {errors.consent && (
+          <span className="error" role="alert">
+            {errors.consent.message}
+          </span>
+        )}
       </div>
       <div className="forms_div buttons">
-        <div className="resetBtn" onClick={() => reset()}>
+        <div data-testid="resetBtn" className="resetBtn" onClick={() => reset()}>
           Reset
         </div>
         <button data-testid="button" className="btnForm">
