@@ -32,7 +32,7 @@ export function Header() {
             <li>
               <NavLink
                 className="navigation_link"
-                to="about"
+                to="/about"
                 style={({ isActive }) =>
                   isActive
                     ? {
@@ -48,7 +48,7 @@ export function Header() {
             <li>
               <NavLink
                 className="navigation_link"
-                to="forms"
+                to="/forms"
                 style={({ isActive }) =>
                   isActive
                     ? {
