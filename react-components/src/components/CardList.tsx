@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import { dateProducts } from '../date/date';
+import React from 'react';
+// import { dateProducts } from '../date/date';
 import { Card } from './Card';
+import { CardListProps } from 'date/types_date';
 
-export function CardList() {
-  const [products] = useState(dateProducts);
+export function CardList({ persons, onCardClick }: CardListProps) {
   return (
     <div className="container_cards">
-      {products.map((product) => (
-        <Card product={product} key={product.id} />
+      {persons.map((person) => (
+        <Card person={person} key={person.id} onCardClick={onCardClick} />
       ))}
     </div>
   );
