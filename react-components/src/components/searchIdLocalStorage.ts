@@ -6,3 +6,11 @@ export function searchIdLocalStorage(id: number): boolean {
 
   return index !== -1 ? likes[index].isLike : false;
 }
+
+export function getInputValueFormLocalStorage() {
+  const valueFromLocalStorage = localStorage.getItem('searchInput');
+  if (valueFromLocalStorage) {
+    return JSON.parse(valueFromLocalStorage);
+  }
+  return '';
+}

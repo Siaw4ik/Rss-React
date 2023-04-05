@@ -60,6 +60,12 @@ export interface IdProps {
   id: number;
 }
 
+export interface SearchBarProps {
+  onHandleSearch: () => void;
+  onHandleLocalStorage: (value: string) => void;
+  inputValue: string;
+}
+
 export type ProductForm = {
   title: string;
   description: string;
