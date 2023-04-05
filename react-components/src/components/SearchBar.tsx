@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import glass from '../assets/search_glass.png';
 
 function getInputValueFormLocalStorage() {
@@ -12,15 +12,18 @@ function getInputValueFormLocalStorage() {
 export function SearchBar() {
   const [value, setValue] = useState(getInputValueFormLocalStorage);
 
+  const valueRef = useRef(value);
+
   useEffect(() => {
     return () => {
-      localStorage.setItem('searchInput', JSON.stringify(value));
+      localStorage.setItem('searchInput', JSON.stringify(valueRef.current));
     };
-  }, [value]);
+  }, []);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
     setValue(inputValue);
+    valueRef.current = value;
   };
 
   return (
