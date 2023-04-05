@@ -1,5 +1,5 @@
 import { CardList } from '../components/CardList';
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import { SearchBar } from '../components/SearchBar';
@@ -18,17 +18,16 @@ export function HomePage() {
   const [showErrors, setShowErrors] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
+  const valueRef = useRef(value);
+
   useEffect(() => {
-    localStorage.setItem('searchInput', JSON.stringify(value));
-    return () => {
-      localStorage.setItem('searchInput', JSON.stringify(value));
-    };
+    valueRef.current = value;
   }, [value]);
 
   const handleSearch = useCallback(async () => {
     try {
       setIsLoading(true);
-      const data: Person[] = await getDataFromServerSearch(value);
+      const data: Person[] = await getDataFromServerSearch(valueRef.current);
       setShowErrors(false);
       setIsLoading(false);
       setPersons(data);
@@ -36,7 +35,7 @@ export function HomePage() {
       setIsLoading(false);
       setShowErrors(true);
     }
-  }, [value]);
+  }, []);
 
   const getPersonsStart = useCallback(async () => {
     try {
@@ -52,12 +51,12 @@ export function HomePage() {
   }, []);
 
   useEffect(() => {
-    if (!value) {
+    if (!valueRef.current) {
       getPersonsStart();
-    } else if (value) {
+    } else if (valueRef.current) {
       handleSearch();
     }
-  }, []);
+  }, [handleSearch, getPersonsStart]);
 
   function handleClickCard(card: Person) {
     setIsShow(true);

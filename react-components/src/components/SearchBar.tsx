@@ -1,8 +1,20 @@
-import React, { ChangeEvent, FormEventHandler } from 'react';
+import React, { ChangeEvent, FormEventHandler, useRef, useEffect } from 'react';
 import glass from '../assets/search_glass.png';
 import { SearchBarProps } from 'date/types_date';
 
 export function SearchBar({ onHandleSearch, onHandleLocalStorage, inputValue }: SearchBarProps) {
+  const valueRef = useRef(inputValue);
+
+  useEffect(() => {
+    return () => {
+      localStorage.setItem('searchInput', JSON.stringify(valueRef.current));
+    };
+  }, []);
+
+  useEffect(() => {
+    valueRef.current = inputValue;
+  }, [inputValue]);
+
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     onHandleLocalStorage(value);
