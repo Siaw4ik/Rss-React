@@ -9,11 +9,11 @@ export async function getDataFromServerSearch(value: string): Promise<Person[]> 
   return data.results;
 }
 
-export async function getDataFromServerStart() {
-  const response = await fetch('https://rickandmortyapi.com/api/character');
+export async function getDataFromServerPerson(id: number): Promise<Person> {
+  const response = await fetch(`https://rickandmortyapi.com/api/character/${id}`);
   if (response.status === 404) {
     throw new Error('errors');
   }
-  const data: RickMortiResponse = await response.json();
-  return data.results;
+  const data: Person = await response.json();
+  return data;
 }

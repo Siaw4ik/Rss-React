@@ -8,7 +8,7 @@ import { CardDetails } from '../components/CardDetails';
 import { Errors } from '../components/Error';
 import { Loader } from '../components/Loader';
 import { getInputValueFormLocalStorage } from '../components/searchIdLocalStorage';
-import { getDataFromServerSearch, getDataFromServerStart } from '../module/responseFunction';
+import { getDataFromServerSearch, getDataFromServerPerson } from '../module/responseFunction';
 
 export function HomePage() {
   const [value, setValue] = useState(getInputValueFormLocalStorage);
@@ -37,26 +37,9 @@ export function HomePage() {
     }
   }, []);
 
-  const getPersonsStart = useCallback(async () => {
-    try {
-      setIsLoading(true);
-      const data = await getDataFromServerStart();
-      setShowErrors(false);
-      setIsLoading(false);
-      setPersons(data);
-    } catch (error) {
-      setIsLoading(false);
-      setShowErrors(true);
-    }
-  }, []);
-
   useEffect(() => {
-    if (!valueRef.current) {
-      getPersonsStart();
-    } else if (valueRef.current) {
-      handleSearch();
-    }
-  }, [handleSearch, getPersonsStart]);
+    handleSearch();
+  }, []);
 
   function handleClickCard(card: Person) {
     setIsShow(true);
