@@ -44,12 +44,18 @@ export interface RickMortiResponse {
 
 export interface CardProps {
   person: Person;
-  onCardClick: (card: Person) => void;
+  onCardClick: (id: number) => void;
 }
 
 export interface CardDetailsProps {
   person: Person | null;
   onClose: () => void;
+  onError: boolean;
+  onLoading: boolean;
+}
+
+export interface ErrorProps {
+  onError: boolean;
 }
 
 export interface ProductProps {
@@ -89,7 +95,7 @@ export interface FormProps {
 
 export interface CardListProps {
   persons: Person[];
-  onCardClick: (card: Person) => void;
+  onCardClick: (id: number) => void;
 }
 
 export type InputForm = {

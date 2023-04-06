@@ -16,7 +16,9 @@ export function HomePage() {
   const [choosedCard, setChoosedCard] = useState<Person | null>(null);
   const [persons, setPersons] = useState<Person[]>([]);
   const [showErrors, setShowErrors] = useState(false);
+  const [showErrorsCard, setShowErrorsCard] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingCard, setIsLoadingCard] = useState(true);
 
   const valueRef = useRef(value);
 
@@ -39,12 +41,20 @@ export function HomePage() {
 
   useEffect(() => {
     handleSearch();
-  }, []);
+  }, [handleSearch]);
 
-  function handleClickCard(card: Person) {
+  async function handleClickCard(id: number) {
     setIsShow(true);
-    setChoosedCard(card);
-    console.log(card);
+    try {
+      setIsLoadingCard(true);
+      const card = await getDataFromServerPerson(id);
+      setShowErrorsCard(false);
+      setIsLoadingCard(false);
+      setChoosedCard(card);
+    } catch (error) {
+      setIsLoadingCard(false);
+      setShowErrorsCard(true);
+    }
   }
 
   function handleLocalStorage(value: string) {
@@ -55,8 +65,26 @@ export function HomePage() {
     <div className="container">
       <div className="container_header-main">
         <Header />
-        {isShow && <div className="cardDetails-shadow" onClick={() => setIsShow(false)}></div>}
-        {isShow && <CardDetails person={choosedCard} onClose={() => setIsShow(false)} />}
+        {isShow && (
+          <div
+            className="cardDetails-shadow"
+            onClick={() => {
+              setIsShow(false);
+              setShowErrorsCard(false);
+            }}
+          ></div>
+        )}
+        {isShow && (
+          <CardDetails
+            person={choosedCard}
+            onClose={() => {
+              setIsShow(false);
+              setShowErrorsCard(false);
+            }}
+            onError={showErrorsCard}
+            onLoading={isLoadingCard}
+          />
+        )}
         <main className="main">
           <div className="container_home">
             <h2 data-testid="homepage-h1">Library Rick and Morty</h2>
@@ -68,7 +96,7 @@ export function HomePage() {
             {isLoading && <Loader />}
             {!isLoading && (
               <>
-                {showErrors && <Errors />}
+                {showErrors && <Errors onError={showErrorsCard} />}
                 {!showErrors && <CardList onCardClick={handleClickCard} persons={persons} />}
               </>
             )}

@@ -42,6 +42,14 @@
   transform: rotate(180deg);
 }
 
+.cardDetails-description {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
 .cardDetails-image {
   width: 180px;
   height: 180px;
@@ -190,6 +198,10 @@
 .imageError {
   width: 340px;
   margin-bottom: 5px;
+}
+
+.imageError.mini {
+  width: 260px;
 }
 
 
