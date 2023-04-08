@@ -1,17 +1,19 @@
 {
   "files": {
-    "main.css": "/Rss-React/static/css/main.5f41b996.css",
-    "main.js": "/Rss-React/static/js/main.fe14f6dc.js",
+    "main.css": "/Rss-React/static/css/main.a0ed0ccd.css",
+    "main.js": "/Rss-React/static/js/main.bc817ce9.js",
     "static/media/logo-store.png": "/Rss-React/static/media/logo-store.c4ecb9718464f8dd33ec.png",
     "static/media/search_glass.png": "/Rss-React/static/media/search_glass.1493710d5f9e9253cea7.png",
+    "static/media/rickandmortiError.png": "/Rss-React/static/media/rickandmortiError.9bbf6f8940362b1ce425.png",
     "static/media/rs_school.svg": "/Rss-React/static/media/rs_school.b0bf6ac385986ba7d5bca77941250a46.svg",
     "static/media/github_icon.svg": "/Rss-React/static/media/github_icon.7c2b277031fc9aeb24c033ff9332c319.svg",
     "index.html": "/Rss-React/index.html",
-    "main.5f41b996.css.map": "/Rss-React/static/css/main.5f41b996.css.map",
-    "main.fe14f6dc.js.map": "/Rss-React/static/js/main.fe14f6dc.js.map"
+    "static/media/close.svg": "/Rss-React/static/media/close.9cbc5a5d4f8d9819323578adf9b836ef.svg",
+    "main.a0ed0ccd.css.map": "/Rss-React/static/css/main.a0ed0ccd.css.map",
+    "main.bc817ce9.js.map": "/Rss-React/static/js/main.bc817ce9.js.map"
   },
   "entrypoints": [
-    "static/css/main.5f41b996.css",
-    "static/js/main.fe14f6dc.js"
+    "static/css/main.a0ed0ccd.css",
+    "static/js/main.bc817ce9.js"
   ]
 }
