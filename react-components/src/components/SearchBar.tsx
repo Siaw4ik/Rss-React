@@ -12,11 +12,13 @@ export function SearchBar({ onHandleSearch, onHandleLocalStorage, inputValue }: 
     event.preventDefault();
     onHandleLocalStorage(inputValue);
     localStorage.setItem('searchInput', JSON.stringify(inputValue));
-    onHandleSearch();
+    if (inputValue !== '') {
+      onHandleSearch();
+    }
   };
 
   return (
-    <form className="searchBar" onSubmit={handleSubmit}>
+    <form data-testid="searchbarForm" className="searchBar" onSubmit={handleSubmit}>
       <input
         data-testid="searchbar"
         type="text"

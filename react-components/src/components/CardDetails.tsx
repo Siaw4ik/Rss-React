@@ -1,7 +1,7 @@
 import { CardDetailsProps } from 'date/types_date';
 import React from 'react';
 import cross from '../assets/close.svg';
-import { Errors } from './Error';
+import { Error } from './Error';
 import { Loader } from './Loader';
 
 export function CardDetails({ person, onClose, onError, onLoading }: CardDetailsProps) {
@@ -9,8 +9,9 @@ export function CardDetails({ person, onClose, onError, onLoading }: CardDetails
     return null;
   }
   return (
-    <div className="container-cardDetails">
+    <div data-testid="container-cardDetails" className="container-cardDetails">
       <img
+        data-testid="cardDetails-cross"
         className="cardDetails-cross"
         src={cross}
         alt="image for close card details"
@@ -19,11 +20,13 @@ export function CardDetails({ person, onClose, onError, onLoading }: CardDetails
       {onLoading && <Loader />}
       {!onLoading && (
         <>
-          {onError && <Errors onError={onError} />}
+          {onError && <Error onError={onError} />}
           {!onError && (
             <div className="cardDetails-description">
               <img className="cardDetails-image" src={person.image} alt={person.name} />
-              <p className="person-name">{person.name}</p>
+              <p data-testid="person-name" className="person-name">
+                {person.name}
+              </p>
               <p className="person-gender">Gender: {person.gender}</p>
               <p className="person-species">Spesies: {person.species}</p>
               <p className="person-location">Location: {person.location.name}</p>

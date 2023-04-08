@@ -10,7 +10,8 @@ export function searchIdLocalStorage(id: number): boolean {
 export function getInputValueFormLocalStorage() {
   const valueFromLocalStorage = localStorage.getItem('searchInput');
   if (valueFromLocalStorage) {
-    return JSON.parse(valueFromLocalStorage);
+    const value = JSON.parse(valueFromLocalStorage);
+    return value;
   }
   return '';
 }

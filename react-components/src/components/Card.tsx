@@ -5,7 +5,11 @@ import { ImageLike } from './ImageLike';
 export function Card({ person, onCardClick }: CardProps) {
   return (
     <div data-testid="card" className="card">
-      <div className="card-description" onClick={() => onCardClick(person.id)}>
+      <div
+        data-testid="card-description"
+        className="card-description"
+        onClick={() => onCardClick(person.id)}
+      >
         <img className="image-product" src={person.image} alt="image product" />
         <p className="name-person">{person.name}</p>
       </div>

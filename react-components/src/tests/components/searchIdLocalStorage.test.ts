@@ -1,4 +1,7 @@
-import { searchIdLocalStorage } from '../../components/searchIdLocalStorage';
+import {
+  searchIdLocalStorage,
+  getInputValueFormLocalStorage,
+} from '../../components/searchIdLocalStorage';
 
 describe('searchIdLocalStorage', () => {
   afterEach(() => {
@@ -32,5 +35,22 @@ describe('searchIdLocalStorage', () => {
 
     const result = searchIdLocalStorage(1);
     expect(result).toBe(false);
+  });
+});
+
+describe('getInputValueFormLocalStorage function', () => {
+  afterEach(() => {
+    localStorage.clear();
+  });
+
+  it('should return empty string when no value is stored in localStorage', () => {
+    expect(getInputValueFormLocalStorage()).toEqual('');
+  });
+
+  it('should return value from localStorage if it exists', () => {
+    const inputValue = 'Rick and Morty';
+    localStorage.setItem('searchInput', JSON.stringify(inputValue));
+
+    expect(getInputValueFormLocalStorage()).toEqual(inputValue);
   });
 });

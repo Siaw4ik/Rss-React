@@ -1,17 +1,19 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, act } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
 import App from '../App';
 
 describe('App', () => {
-  test('renders home page', () => {
-    render(
-      <MemoryRouter initialEntries={['/']}>
-        <App />
-      </MemoryRouter>
-    );
-    expect(screen.getByText('Store')).toBeInTheDocument();
+  test('renders home page', async () => {
+    await act(async () => {
+      render(
+        <MemoryRouter initialEntries={['/']}>
+          <App />
+        </MemoryRouter>
+      );
+    });
+    expect(screen.getByText('Library Rick and Morty')).toBeInTheDocument();
   });
 
   test('renders about page', () => {

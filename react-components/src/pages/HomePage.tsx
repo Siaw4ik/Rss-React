@@ -5,7 +5,7 @@ import { Footer } from '../components/Footer';
 import { SearchBar } from '../components/SearchBar';
 import { Person } from 'date/types_date';
 import { CardDetails } from '../components/CardDetails';
-import { Errors } from '../components/Error';
+import { Error } from '../components/Error';
 import { Loader } from '../components/Loader';
 import { getInputValueFormLocalStorage } from '../components/searchIdLocalStorage';
 import { getDataFromServerSearch, getDataFromServerPerson } from '../module/responseFunction';
@@ -33,6 +33,7 @@ export function HomePage() {
       setShowErrors(false);
       setIsLoading(false);
       setPersons(data);
+      console.log('search');
     } catch (error) {
       setIsLoading(false);
       setShowErrors(true);
@@ -50,6 +51,7 @@ export function HomePage() {
       const card = await getDataFromServerPerson(id);
       setShowErrorsCard(false);
       setIsLoadingCard(false);
+      console.log(card);
       setChoosedCard(card);
     } catch (error) {
       setIsLoadingCard(false);
@@ -62,7 +64,7 @@ export function HomePage() {
   }
 
   return (
-    <div className="container">
+    <div data-testid="container" className="container">
       <div className="container_header-main">
         <Header />
         {isShow && (
@@ -96,7 +98,7 @@ export function HomePage() {
             {isLoading && <Loader />}
             {!isLoading && (
               <>
-                {showErrors && <Errors onError={showErrorsCard} />}
+                {showErrors && <Error onError={showErrorsCard} />}
                 {!showErrors && <CardList onCardClick={handleClickCard} persons={persons} />}
               </>
             )}

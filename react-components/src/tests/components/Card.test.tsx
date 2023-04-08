@@ -1,10 +1,11 @@
-/* import React from 'react';
+import React from 'react';
 import { unmountComponentAtNode } from 'react-dom';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import '@testing-library/jest-dom';
 import 'jest';
 import { Card } from '../../components/Card';
+import { Person } from '../../date/types_date';
 
 let container: HTMLDivElement | null = null;
 beforeEach(() => {
@@ -21,33 +22,42 @@ afterEach(() => {
   }
 });
 
-const mockProduct = {
-  id: 20,
-  title: 'DANVOUY Womens T Shirt Casual Cotton Short',
-  price: 12.99,
-  description:
-    '95%Cotton,5%Spandex, Features: Casual, Short Sleeve, Letter Print,V-Neck,Fashion Tees, The fabric is soft and has some stretch., Occasion: Casual/Office/Beach/School/Home/Street. Season: Spring,Summer,Autumn,Winter.',
-  category: "women's clothing",
-  image: 'https://fakestoreapi.com/img/61pHAEJ4NML._AC_UX679_.jpg',
-  rating: {
-    rate: 3.6,
-    count: 145,
+const mockPerson: Person = {
+  created: '2017-11-04T19:22:43.665Z',
+  episode: [
+    'https://rickandmortyapi.com/api/episode/6',
+    'https://rickandmortyapi.com/api/episode/7',
+  ],
+  gender: 'Female',
+  id: 4,
+  image: 'https://rickandmortyapi.com/api/character/avatar/4.jpeg',
+  location: {
+    name: 'Earth (Replacement Dimension)',
+    url: 'https://rickandmortyapi.com/api/location/20',
   },
-  like: false,
+  name: 'Beth Smith',
+  origin: {
+    name: 'Earth (Replacement Dimension)',
+    url: 'https://rickandmortyapi.com/api/location/20',
+  },
+  species: 'Human',
+  status: 'Alive',
+  type: '',
+  url: 'https://rickandmortyapi.com/api/character/4',
 };
 
 describe('test Card', () => {
   it('renders card', () => {
-    render(<Card person={mockProduct} key={mockProduct.id} />);
+    const onCardClick = jest.fn();
+    render(<Card person={mockPerson} key={1} onCardClick={onCardClick} />);
     const card = screen.getByTestId('card');
-    const showDetails = screen.getByTestId('show-details');
-    const ratingProduct = screen.getByTestId('rating-product');
+    const cardDescription = screen.getByTestId('card-description');
 
-    expect(ratingProduct).toBeEmptyDOMElement();
     expect(card).toBeInTheDocument();
-    expect(screen.getByText('Show details')).toBeInTheDocument();
-    fireEvent.click(showDetails);
-    expect(ratingProduct).not.toBeEmptyDOMElement();
-    expect(screen.getByText('Hide details')).toBeInTheDocument();
+
+    fireEvent.click(cardDescription);
+
+    expect(onCardClick).toHaveBeenCalledTimes(1);
+    expect(onCardClick).toHaveBeenCalledWith(mockPerson.id);
   });
-}); */
+});

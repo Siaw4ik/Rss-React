@@ -1,6 +1,6 @@
-/* import React from 'react';
+import React from 'react';
 import { unmountComponentAtNode } from 'react-dom';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import '@testing-library/jest-dom';
 import 'jest';
@@ -22,8 +22,22 @@ afterEach(() => {
 });
 
 describe('Search Bar', () => {
+  beforeEach(() => {
+    window.localStorage.clear();
+  });
+
+  const handleSearch = jest.fn();
+  const handleLocalStorage = jest.fn();
+  const mockInpunValue = 'slawa';
+
   it('renders Search Bar', () => {
-    render(<SearchBar />);
+    render(
+      <SearchBar
+        onHandleSearch={handleSearch}
+        onHandleLocalStorage={handleLocalStorage}
+        inputValue={mockInpunValue}
+      />
+    );
     const searchInput = screen.getByTestId('searchbar');
     const searchImage = screen.getByTestId('search-image');
     expect(searchInput).toBeInTheDocument();
@@ -31,38 +45,45 @@ describe('Search Bar', () => {
   });
 
   it('change Search Bar input value', () => {
-    render(<SearchBar />);
+    render(
+      <SearchBar
+        onHandleSearch={handleSearch}
+        onHandleLocalStorage={handleLocalStorage}
+        inputValue={mockInpunValue}
+      />
+    );
     const searchInput = screen.getByTestId('searchbar') as HTMLInputElement;
-    fireEvent.change(searchInput, { target: { value: 'slawa' } });
-    expect(searchInput.value).toBe('slawa');
+    fireEvent.change(searchInput, { target: { value: 'slawacool' } });
+    waitFor(() => {
+      expect(searchInput).toHaveValue('slawacool');
+      expect(handleLocalStorage).toHaveBeenCalledWith('slawacool');
+    });
   });
 
-  it('on blur change Search Bar input value', () => {
-    render(<SearchBar />);
+  it('submit Search Bar input value', () => {
+    render(
+      <SearchBar
+        onHandleSearch={handleSearch}
+        onHandleLocalStorage={handleLocalStorage}
+        inputValue={mockInpunValue}
+      />
+    );
     const searchInput = screen.getByTestId('searchbar') as HTMLInputElement;
-    fireEvent.blur(searchInput, { target: { value: 'slawa' } });
-    expect(searchInput.value).toBe('slawa');
+    const searchForm = screen.getByTestId('searchbarForm') as HTMLInputElement;
+
+    fireEvent.change(searchInput, { target: { value: 'slawacool' } });
+
+    waitFor(() => {
+      expect(searchInput).toHaveValue('slawacool');
+      expect(handleLocalStorage).toHaveBeenCalledWith('slawacool');
+    });
+
+    fireEvent.submit(searchForm);
+
+    waitFor(() => {
+      expect(handleLocalStorage).toHaveBeenCalledWith('slawacool');
+      expect(JSON.parse(window.localStorage.getItem('searchInput') as string)).toBe('slawacool');
+      expect(handleSearch).toHaveBeenCalled();
+    });
   });
 });
-
-describe('SearchBar', () => {
-  beforeEach(() => {
-    window.localStorage.clear();
-  });
-
-  it('should retrieve input value from local storage and set it to component state', () => {
-    const storedValue = 'example input value';
-    window.localStorage.setItem('searchInput', JSON.stringify(storedValue));
-
-    const { getByTestId } = render(<SearchBar />);
-
-    expect(getByTestId('searchbar')).toHaveValue(storedValue);
-  });
-
-  it('should not set inputValue in state if no value is stored in local storage', () => {
-    const { getByTestId } = render(<SearchBar />);
-
-    expect(getByTestId('searchbar')).toHaveValue('');
-  });
-});
- */
