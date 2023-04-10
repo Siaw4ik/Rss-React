@@ -1,5 +1,4 @@
 import React from 'react';
-// import { dateProducts } from '../date/date';
 import { Card } from './Card';
 import { CardListProps } from 'date/types_date';
 
