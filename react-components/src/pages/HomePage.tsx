@@ -33,7 +33,6 @@ export function HomePage() {
       setShowErrors(false);
       setIsLoading(false);
       setPersons(data);
-      console.log('search');
     } catch (error) {
       setIsLoading(false);
       setShowErrors(true);
@@ -51,7 +50,6 @@ export function HomePage() {
       const card = await getDataFromServerPerson(id);
       setShowErrorsCard(false);
       setIsLoadingCard(false);
-      console.log(card);
       setChoosedCard(card);
     } catch (error) {
       setIsLoadingCard(false);
