@@ -1,20 +1,27 @@
 import React, { ChangeEvent, FormEventHandler } from 'react';
 import glass from '../assets/search_glass.png';
 import { SearchBarProps } from 'date/types_date';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from 'store';
+import { setInputValue } from '../redux/search/searchSlice';
 
-export function SearchBar({ onHandleSearch, onHandleLocalStorage, inputValue }: SearchBarProps) {
+export function SearchBar({ onHandleSearch, onHandleLocalStorage }: SearchBarProps) {
+  const dispatch = useDispatch();
+  const inputValue = useSelector((state: RootState) => state.search.inputValue);
+
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     onHandleLocalStorage(value);
+    dispatch(setInputValue(value));
   };
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
     onHandleLocalStorage(inputValue);
-    localStorage.setItem('searchInput', JSON.stringify(inputValue));
-    if (inputValue !== '') {
+    onHandleSearch();
+    /* if (inputValue !== '') {
       onHandleSearch();
-    }
+    } */
   };
 
   return (
