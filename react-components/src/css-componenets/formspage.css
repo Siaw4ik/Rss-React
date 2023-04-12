@@ -170,45 +170,23 @@
   justify-content: space-between;
 }
 
-.title-productForm{
+.title-personForm{
   text-align: center;
   margin: 0 0 10px 0;
 }
 
-.description-productForm{
-  margin: 0;
+
+.species-personForm,
+.gender-personForm,
+.status-personForm,
+.location-personForm {
   font-size: 14px;
-  width: 100%;
-  -webkit-line-clamp: 3;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  font-weight: 600;
 }
 
-.category-productForm {
-  margin-top: 10px;
-  font-size: 14px;
-}
-
-.rating-productForm {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  margin: 10px 0;
-}
-
-.price-productForm{
-  margin: 0;
-}
-.count-productForm{
-  margin: 0;
-}
-
-.availability-date_productForm{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  font-size: 13px;
+.date-personForm {
+  font-size: 12px;
+  text-align: end;
 }
 
 .modalWindow {

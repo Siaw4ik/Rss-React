@@ -1,4 +1,4 @@
-import { ProductForm } from '../date/types_date';
+import { PersonForm } from '../date/types_date';
 import React, { useState } from 'react';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
@@ -6,11 +6,11 @@ import { Form } from '../components/Form';
 import { CardForm } from '../components/CardForm';
 
 export function FormsPage() {
-  const [products, setProducts] = useState<ProductForm[]>([]);
+  const [persons, setPersons] = useState<PersonForm[]>([]);
   const [isActive, setIsActive] = useState(false);
 
-  const addProduct = (product: ProductForm) => {
-    setProducts((prevProducts) => [...prevProducts, product]);
+  const addPerson = (person: PersonForm) => {
+    setPersons((prevPersons) => [...prevPersons, person]);
   };
 
   const showModalWindow = () => {
@@ -24,13 +24,13 @@ export function FormsPage() {
         <div className="container_formpage">
           <div className="container_form-block">
             <h3 data-testid="formpage-formtitle">Form for creating and adding a product</h3>
-            <Form addProduct={addProduct} showModalWindow={showModalWindow} />
+            <Form addPerson={addPerson} showModalWindow={showModalWindow} />
           </div>
           <div className="container_createdCrads">
             <h3 data-testid="formpage-cardsformtitle">Created and added products</h3>
             <div data-testid="containerCards" className="wrapper_cardList">
-              {products.map((product, index) => (
-                <CardForm key={index} product={product} />
+              {persons.map((product, index) => (
+                <CardForm key={index} person={product} />
               ))}
             </div>
           </div>

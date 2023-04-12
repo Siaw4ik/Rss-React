@@ -1,30 +1,29 @@
 import { FormProps } from '../date/types_date';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { InputForm } from '../date/types_date';
+import { PersonForm } from '../date/types_date';
 
-export function Form({ addProduct, showModalWindow }: FormProps) {
+export function Form({ addPerson, showModalWindow }: FormProps) {
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<InputForm>({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
+  } = useForm<PersonForm>({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
 
-  const onSubmit = (data: InputForm) => {
-    const product = {
-      title: data.name,
-      description: data.description,
+  const onSubmit = (data: PersonForm) => {
+    const person = {
+      name: data.name,
       date: data.date,
-      category: data.category,
-      presence: data.availability,
-      count: data.count,
-      price: data.price,
+      gender: data.gender,
+      species: data.species,
+      status: data.status,
       consent: data.consent,
-      image: URL.createObjectURL(data.image[0]),
+      location: data.location,
+      imageUrl: data.imageUpload ? URL.createObjectURL(data.imageUpload[0]) : '',
     };
 
-    addProduct(product);
+    addPerson(person);
     reset();
     showModalWindow();
     setTimeout(() => {
@@ -35,7 +34,7 @@ export function Form({ addProduct, showModalWindow }: FormProps) {
   return (
     <form className="wrapper_form" onSubmit={handleSubmit(onSubmit)} data-testid="form">
       <div className="forms_div">
-        <p className="forms_div-title">Name of product</p>
+        <p className="forms_div-title">Name</p>
         <input
           data-testid="name-input"
           type="text"
@@ -52,62 +51,97 @@ export function Form({ addProduct, showModalWindow }: FormProps) {
         )}
       </div>
 
-      <div className="forms_div-column">
-        <p className="forms_div-title">Description of product</p>
-        <textarea
-          data-testid="description-input"
-          {...register('description', {
-            required: 'Enter a value in the field',
-            validate: (value) => value.split(' ').length > 2 || 'Value must be at least 3 words',
-          })}
-          cols={40}
-          rows={2}
-        />
-        {errors.description && (
+      <div className="forms_div">
+        <p className="forms_div-title">Species</p>
+        <select
+          data-testid="category-select"
+          defaultValue=""
+          {...register('species', { required: 'Сhoose a value in the field' })}
+        >
+          <option value="">--Select species--</option>
+          <option value="Alien">Alien</option>
+          <option value="Animal">Animal</option>
+          <option value="Disease">Disease</option>
+          <option value="Fish">Fish</option>
+          <option value="Human">Human</option>
+          <option value="Humanoid">Humanoid</option>
+          <option value="Human with giant head">Human with giant head</option>
+          <option value="Mythological Creature">Mythological Creature</option>
+          <option value="Poopybutthole">Poopybutthole</option>
+          <option value="Robot">Robot</option>
+          <option value="Unknown">Unknown</option>
+        </select>
+        {errors.species && (
           <span className="error" role="alert">
-            {errors.description.message}
+            {errors.species.message}
           </span>
         )}
       </div>
 
       <div className="forms_div">
-        <div className="forms_div form-price">
-          <p className="forms_div-title">Price</p>
-          <input
-            data-testid="price-input"
-            type="number"
-            {...register('price', {
-              required: 'Enter a value in the field',
-              validate: (value) => value > 0 || 'Invalid value(> 0)',
-            })}
-          />
-          {errors.price && (
-            <span className="error" role="alert">
-              {errors.price.message}
-            </span>
-          )}
-        </div>
-
-        <div className="forms_div form-count">
-          <p className="forms_div-title">Count</p>
-          <input
-            data-testid="count-input"
-            type="number"
-            {...register('count', {
-              required: 'Enter a value in the field',
-              validate: (value) => value > 0 || 'Invalid value(> 0)',
-            })}
-          />
-          {errors.count && (
-            <span className="error" role="alert">
-              {errors.count.message}
-            </span>
-          )}
-        </div>
+        <p className="forms_div-title">Status</p>
+        <select
+          defaultValue=""
+          {...register('status', { required: 'Сhoose a value in the field' })}
+        >
+          <option value="">--Select status--</option>
+          <option value="Alive">Alive</option>
+          <option value="Dead">Dead</option>
+          <option value="Unknown">Unknown</option>
+        </select>
+        {errors.status && (
+          <span className="error" role="alert">
+            {errors.status.message}
+          </span>
+        )}
       </div>
 
       <div className="forms_div">
-        <p className="forms_div-title">Date of added product</p>
+        <p className="forms_div-title">Location</p>
+        <input
+          type="text"
+          {...register('location', {
+            required: 'Enter a value in the field',
+          })}
+        />
+        {errors.location && (
+          <span className="error" role="alert">
+            {errors.location.message}
+          </span>
+        )}
+      </div>
+
+      <div className="forms_div-column">
+        <p className="forms_div-title">Gender</p>
+        <div className="wrapper_radios">
+          <div>
+            <p>Male</p>
+            <input
+              data-testid="presence-radio1"
+              type="radio"
+              value="Male"
+              {...register('gender', { required: 'Сhoose one of the values' })}
+            />
+          </div>
+          <div>
+            <p>Female</p>
+            <input
+              type="radio"
+              value="Female"
+              data-testid="presence-radio2"
+              {...register('gender', { required: 'Сhoose one of the values' })}
+            />
+          </div>
+        </div>
+        {errors.gender && (
+          <span className="error" role="alert">
+            {errors.gender.message}
+          </span>
+        )}
+      </div>
+
+      <div className="forms_div">
+        <p className="forms_div-title">Date of person created</p>
         <input
           data-testid="date-input"
           type="date"
@@ -125,80 +159,30 @@ export function Form({ addProduct, showModalWindow }: FormProps) {
         )}
       </div>
 
-      <div className="forms_div">
-        <p className="forms_div-title">Select product category</p>
-        <select
-          data-testid="category-select"
-          defaultValue=""
-          {...register('category', { required: 'Сhoose a value in the field' })}
-        >
-          <option value="">--Select category--</option>
-          <option value="men's clothing">Men&#x60;s clothing</option>
-          <option value="women's clothing">Women&#x60;s clothing</option>
-          <option value="electronics">Electronics</option>
-          <option value="jewelery">Jewelery</option>
-          <option value="another category">Another category</option>
-        </select>
-        {errors.category && (
-          <span className="error" role="alert">
-            {errors.category.message}
-          </span>
-        )}
-      </div>
-
-      <div className="forms_div-column">
-        <p className="forms_div-title">Product availability</p>
-        <div className="wrapper_radios">
-          <div>
-            <p>available</p>
-            <input
-              data-testid="presence-radio1"
-              type="radio"
-              value="available"
-              {...register('availability', { required: 'Сhoose one of the values' })}
-            />
-          </div>
-          <div>
-            <p>unavailable</p>
-            <input
-              type="radio"
-              value="unavailable"
-              data-testid="presence-radio2"
-              {...register('availability', { required: 'Сhoose one of the values' })}
-            />
-          </div>
-        </div>
-        {errors.availability && (
-          <span className="error" role="alert">
-            {errors.availability.message}
-          </span>
-        )}
-      </div>
-
       <div className="forms_div-column">
         <p className="forms_div-title">Upload picture</p>
         <input
           data-testid="image-input"
           type="file"
           accept="image/*"
-          {...register('image', { required: 'Upload a picture' })}
+          {...register('imageUpload', { required: 'Upload a picture' })}
         />
-        {errors.image && (
+        {errors.imageUpload && (
           <span className="error" role="alert">
-            {errors.image.message}
+            {errors.imageUpload.message}
           </span>
         )}
       </div>
 
       <div className="forms_div">
-        <p className="forms_div-title">I consent to the processing of product data</p>
+        <p className="forms_div-title">I consent to the processing data</p>
         <input
           type="checkbox"
           value="true"
           data-testid="consent-check"
           defaultChecked={false}
           {...register('consent', {
-            required: 'The product will not be added until you give permission',
+            required: 'Consent must be given',
           })}
         />
         {errors.consent && (

@@ -72,24 +72,24 @@ export interface SearchBarProps {
   inputValue: string;
 }
 
-export type ProductForm = {
-  title: string;
-  description: string;
+export type PersonForm = {
+  name: string;
   date: string;
-  category: string;
-  presence: string;
-  count: number | string;
-  price: number | string;
+  species: string;
+  status: string;
+  gender: string;
   consent: string;
-  image: string;
+  location: string;
+  imageUrl?: string;
+  imageUpload?: FileList;
 };
 
 export interface CardFormProps {
-  product: ProductForm;
+  person: PersonForm;
 }
 
 export interface FormProps {
-  addProduct: (product: ProductForm) => void;
+  addPerson: (person: PersonForm) => void;
   showModalWindow: () => void;
 }
 
@@ -97,15 +97,3 @@ export interface CardListProps {
   persons: Person[];
   onCardClick: (id: number) => void;
 }
-
-export type InputForm = {
-  name: string;
-  description: string;
-  price: number;
-  count: number;
-  date: string;
-  category: string;
-  availability: string;
-  consent: string;
-  image: FileList;
-};

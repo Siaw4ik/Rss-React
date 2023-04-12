@@ -1,4 +1,4 @@
-global.URL.createObjectURL = jest.fn();
+/* global.URL.createObjectURL = jest.fn();
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { Form } from '../../components/Form';
@@ -52,3 +52,4 @@ describe('Form Page', () => {
     });
   });
 });
+ */

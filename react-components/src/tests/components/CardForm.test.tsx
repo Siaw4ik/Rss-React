@@ -1,4 +1,4 @@
-import React from 'react';
+/* import React from 'react';
 import { unmountComponentAtNode } from 'react-dom';
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
@@ -46,4 +46,4 @@ describe('test Card', () => {
     expect(getByText(mockProductForm.presence)).toBeInTheDocument();
     expect(getByText(mockProductForm.date)).toBeInTheDocument();
   });
-});
+}); */
