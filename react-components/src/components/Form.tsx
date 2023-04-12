@@ -2,14 +2,17 @@ import { FormProps } from '../date/types_date';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { PersonForm } from '../date/types_date';
+import { useDispatch } from 'react-redux';
+import { addPerson } from '../redux/form/formSlice';
 
-export function Form({ addPerson, showModalWindow }: FormProps) {
+export function Form({ showModalWindow }: FormProps) {
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
   } = useForm<PersonForm>({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
+  const dispatch = useDispatch();
 
   const onSubmit = (data: PersonForm) => {
     const person = {
@@ -23,7 +26,7 @@ export function Form({ addPerson, showModalWindow }: FormProps) {
       imageUrl: data.imageUpload ? URL.createObjectURL(data.imageUpload[0]) : '',
     };
 
-    addPerson(person);
+    dispatch(addPerson(person));
     reset();
     showModalWindow();
     setTimeout(() => {

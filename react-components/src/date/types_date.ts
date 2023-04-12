@@ -81,7 +81,7 @@ export type PersonForm = {
   consent: string;
   location: string;
   imageUrl?: string;
-  imageUpload?: FileList;
+  imageUpload?: FileList | null;
 };
 
 export interface CardFormProps {
@@ -89,7 +89,6 @@ export interface CardFormProps {
 }
 
 export interface FormProps {
-  addPerson: (person: PersonForm) => void;
   showModalWindow: () => void;
 }
 

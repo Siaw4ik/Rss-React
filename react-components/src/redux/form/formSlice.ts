@@ -1,15 +1,24 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { PersonForm } from 'date/types_date';
 
-const initialState = {
-  name: '',
+interface PersonsFormState {
+  persons: PersonForm[];
+}
+
+const initialState: PersonsFormState = {
+  persons: [],
 };
 
 export const formSlice = createSlice({
-  name: 'form',
+  name: 'formCards',
   initialState,
   reducers: {
-    setName: (state, action: PayloadAction<string>) => {
-      state.name = action.payload;
+    addPerson: (state, action: PayloadAction<PersonForm>) => {
+      state.persons.push(action.payload);
     },
   },
 });
+
+export const { addPerson } = formSlice.actions;
+
+export default formSlice.reducer;

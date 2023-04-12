@@ -1,17 +1,14 @@
-import { PersonForm } from '../date/types_date';
 import React, { useState } from 'react';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import { Form } from '../components/Form';
 import { CardForm } from '../components/CardForm';
+import { RootState } from 'store';
+import { useSelector } from 'react-redux';
 
 export function FormsPage() {
-  const [persons, setPersons] = useState<PersonForm[]>([]);
   const [isActive, setIsActive] = useState(false);
-
-  const addPerson = (person: PersonForm) => {
-    setPersons((prevPersons) => [...prevPersons, person]);
-  };
+  const persons = useSelector((state: RootState) => state.form.persons);
 
   const showModalWindow = () => {
     setIsActive((prevIsActive) => !prevIsActive);
@@ -24,7 +21,7 @@ export function FormsPage() {
         <div className="container_formpage">
           <div className="container_form-block">
             <h3 data-testid="formpage-formtitle">Form for creating and adding a product</h3>
-            <Form addPerson={addPerson} showModalWindow={showModalWindow} />
+            <Form showModalWindow={showModalWindow} />
           </div>
           <div className="container_createdCrads">
             <h3 data-testid="formpage-cardsformtitle">Created and added products</h3>
