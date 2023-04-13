@@ -9,7 +9,7 @@ import { Loader } from '../components/Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store';
 import { useGetPersonsByNameQuery, useGetPersonsStartQuery } from '../redux/services/rick_morti';
-import { changePersons } from 'redux/persons/personsSlice';
+import { changePersons } from '../redux/features/personsSlice';
 
 export function HomePage() {
   const [isShow, setIsShow] = useState(false);
@@ -86,7 +86,7 @@ export function HomePage() {
             {isLoading ? (
               <Loader />
             ) : showError ? (
-              <Error />
+              <Error onMini={false} />
             ) : (
               <CardList persons={persons} onShowDetails={() => setIsShow(true)} />
             )}

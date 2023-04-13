@@ -29,7 +29,7 @@ export function CardDetails({ onClose }: CardDetailsProps) {
       {isFetching ? (
         <Loader />
       ) : error ? (
-        <Error />
+        <Error onMini={true} />
       ) : (
         <div className="cardDetails-description">
           <img className="cardDetails-image" src={person?.image} alt={person?.name} />

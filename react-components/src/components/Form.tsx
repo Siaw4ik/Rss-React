@@ -3,7 +3,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { PersonForm } from '../date/types_date';
 import { useDispatch } from 'react-redux';
-import { addPerson } from '../redux/form/formSlice';
+import { addPerson } from '../redux/features/formSlice';
 
 export function Form({ showModalWindow }: FormProps) {
   const {

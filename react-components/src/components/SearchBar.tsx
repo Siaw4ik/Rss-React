@@ -2,7 +2,7 @@ import React, { FormEventHandler, useRef } from 'react';
 import glass from '../assets/search_glass.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store';
-import { setInputValue } from '../redux/search/searchSlice';
+import { setInputValue } from '../redux/features/searchSlice';
 
 export function SearchBar() {
   const searchRef = useRef<HTMLInputElement | null>(null);

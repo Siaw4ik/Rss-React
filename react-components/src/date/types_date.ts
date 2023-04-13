@@ -55,7 +55,7 @@ export interface CardDetailsProps {
 }
 
 export interface ErrorProps {
-  onError: boolean;
+  onMini: boolean;
 }
 
 export interface ProductProps {

@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
-import searchReducer from './redux/search/searchSlice';
-import formReducer from './redux/form/formSlice';
-import personsReducer from './redux/persons/personsSlice';
+import searchReducer from './redux/features/searchSlice';
+import formReducer from './redux/features/formSlice';
+import personsReducer from './redux/features/personsSlice';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import { rick_mortiApi } from './redux/services/rick_morti';
 

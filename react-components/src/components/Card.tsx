@@ -2,7 +2,7 @@ import React from 'react';
 import { CardProps } from '../date/types_date';
 import { ImageLike } from './ImageLike';
 import { useDispatch } from 'react-redux';
-import { setId } from '../redux/persons/personsSlice';
+import { setId } from '../redux/features/personsSlice';
 
 export function Card({ person, onShowDetails }: CardProps) {
   const dispatch = useDispatch();
