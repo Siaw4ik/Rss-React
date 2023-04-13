@@ -2,11 +2,11 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { PersonForm } from 'date/types_date';
 
 interface PersonsFormState {
-  persons: PersonForm[];
+  personsForm: PersonForm[];
 }
 
 const initialState: PersonsFormState = {
-  persons: [],
+  personsForm: [],
 };
 
 export const formSlice = createSlice({
@@ -14,7 +14,7 @@ export const formSlice = createSlice({
   initialState,
   reducers: {
     addPerson: (state, action: PayloadAction<PersonForm>) => {
-      state.persons.push(action.payload);
+      state.personsForm.push(action.payload);
     },
   },
 });

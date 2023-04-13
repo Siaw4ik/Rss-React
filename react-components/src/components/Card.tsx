@@ -1,14 +1,22 @@
 import React from 'react';
 import { CardProps } from '../date/types_date';
 import { ImageLike } from './ImageLike';
+import { useDispatch } from 'react-redux';
+import { setId } from '../redux/persons/personsSlice';
 
-export function Card({ person, onCardClick }: CardProps) {
+export function Card({ person, onShowDetails }: CardProps) {
+  const dispatch = useDispatch();
+
   return (
     <div data-testid="card" className="card">
       <div
         data-testid="card-description"
         className="card-description"
-        onClick={() => onCardClick(person.id)}
+        onClick={() => {
+          console.log(person.id);
+          dispatch(setId(person.id));
+          onShowDetails();
+        }}
       >
         <img className="image-product" src={person.image} alt="image product" />
         <p className="name-person">{person.name}</p>

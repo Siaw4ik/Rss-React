@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 
 export function FormsPage() {
   const [isActive, setIsActive] = useState(false);
-  const persons = useSelector((state: RootState) => state.form.persons);
+  const persons = useSelector((state: RootState) => state.form.personsForm);
 
   const showModalWindow = () => {
     setIsActive((prevIsActive) => !prevIsActive);

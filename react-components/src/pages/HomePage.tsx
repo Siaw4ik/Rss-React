@@ -1,65 +1,64 @@
 import { CardList } from '../components/CardList';
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import { SearchBar } from '../components/SearchBar';
-import { Person } from 'date/types_date';
 import { CardDetails } from '../components/CardDetails';
 import { Error } from '../components/Error';
 import { Loader } from '../components/Loader';
-import { getInputValueFormLocalStorage } from '../components/searchIdLocalStorage';
-import { getDataFromServerSearch, getDataFromServerPerson } from '../module/responseFunction';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from 'store';
+import { useGetPersonsByNameQuery, useGetPersonsStartQuery } from '../redux/services/rick_morti';
+import { changePersons } from 'redux/persons/personsSlice';
 
 export function HomePage() {
-  const [value, setValue] = useState(getInputValueFormLocalStorage);
   const [isShow, setIsShow] = useState(false);
-  const [choosedCard, setChoosedCard] = useState<Person | null>(null);
-  const [persons, setPersons] = useState<Person[]>([]);
-  const [showErrors, setShowErrors] = useState(false);
-  const [showErrorsCard, setShowErrorsCard] = useState(false);
+  const [showError, setShowError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [isLoadingCard, setIsLoadingCard] = useState(true);
 
-  const valueRef = useRef(value);
+  const dispatch = useDispatch();
+  const inputValue = useSelector((state: RootState) => state.search.inputValue);
+  const persons = useSelector((state: RootState) => state.persons.persons);
+
+  const {
+    data: dataStart,
+    error: errorStart,
+    isFetching: isFetchingStart,
+  } = useGetPersonsStartQuery();
 
   useEffect(() => {
-    valueRef.current = value;
-  }, [value]);
+    if (dataStart) {
+      dispatch(changePersons(dataStart.results));
+    }
+  }, [dataStart, dispatch]);
 
-  const handleSearch = useCallback(async () => {
-    try {
+  const {
+    data: dataSearch,
+    error: errorSearch,
+    isFetching: isFetchingSearch,
+  } = useGetPersonsByNameQuery(inputValue);
+
+  useEffect(() => {
+    if (inputValue !== '') {
+      if (dataSearch) {
+        dispatch(changePersons(dataSearch.results));
+      }
+    }
+  }, [dataSearch, dispatch, errorSearch, inputValue]);
+
+  useEffect(() => {
+    if (isFetchingStart || isFetchingSearch) {
       setIsLoading(true);
-      const data: Person[] = await getDataFromServerSearch(valueRef.current);
-      setShowErrors(false);
+    } else if (!isFetchingStart || !isFetchingSearch) {
       setIsLoading(false);
-      setPersons(data);
-    } catch (error) {
-      setIsLoading(false);
-      setShowErrors(true);
     }
-  }, []);
 
-  useEffect(() => {
-    handleSearch();
-  }, [handleSearch]);
-
-  async function handleClickCard(id: number) {
-    setIsShow(true);
-    try {
-      setIsLoadingCard(true);
-      const card = await getDataFromServerPerson(id);
-      setShowErrorsCard(false);
-      setIsLoadingCard(false);
-      setChoosedCard(card);
-    } catch (error) {
-      setIsLoadingCard(false);
-      setShowErrorsCard(true);
+    if (errorStart || errorSearch) {
+      setShowError(true);
+    } else if (!errorStart || !errorSearch) {
+      setShowError(false);
     }
-  }
-
-  function handleLocalStorage(value: string) {
-    setValue(value);
-  }
+  }, [isFetchingStart, isFetchingSearch, errorStart, errorSearch]);
 
   return (
     <div data-testid="container" className="container">
@@ -70,35 +69,26 @@ export function HomePage() {
             className="cardDetails-shadow"
             onClick={() => {
               setIsShow(false);
-              setShowErrorsCard(false);
             }}
           ></div>
         )}
         {isShow && (
           <CardDetails
-            person={choosedCard}
             onClose={() => {
               setIsShow(false);
-              setShowErrorsCard(false);
             }}
-            onError={showErrorsCard}
-            onLoading={isLoadingCard}
           />
         )}
         <main className="main">
           <div className="container_home">
             <h2 data-testid="homepage-h1">Library Rick and Morty</h2>
-            <SearchBar
-              onHandleSearch={handleSearch}
-              onHandleLocalStorage={handleLocalStorage}
-              inputValue={value}
-            />
-            {isLoading && <Loader />}
-            {!isLoading && (
-              <>
-                {showErrors && <Error onError={showErrorsCard} />}
-                {!showErrors && <CardList onCardClick={handleClickCard} persons={persons} />}
-              </>
+            <SearchBar />
+            {isLoading ? (
+              <Loader />
+            ) : showError ? (
+              <Error />
+            ) : (
+              <CardList persons={persons} onShowDetails={() => setIsShow(true)} />
             )}
           </div>
         </main>

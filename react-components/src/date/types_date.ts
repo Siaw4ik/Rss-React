@@ -44,14 +44,14 @@ export interface RickMortiResponse {
 
 export interface CardProps {
   person: Person;
-  onCardClick: (id: number) => void;
+  onShowDetails: () => void;
 }
 
 export interface CardDetailsProps {
-  person: Person | null;
+  // person: Person | null;
   onClose: () => void;
-  onError: boolean;
-  onLoading: boolean;
+  /*   onError: boolean;
+  onLoading: boolean; */
 }
 
 export interface ErrorProps {
@@ -66,11 +66,12 @@ export interface IdProps {
   id: number;
 }
 
-export interface SearchBarProps {
+/* export interface SearchBarProps {
   onHandleSearch: () => void;
   onHandleLocalStorage: (value: string) => void;
   inputValue: string;
-}
+  onSubmitForm: () => void;
+} */
 
 export type PersonForm = {
   name: string;
@@ -94,5 +95,5 @@ export interface FormProps {
 
 export interface CardListProps {
   persons: Person[];
-  onCardClick: (id: number) => void;
+  onShowDetails: () => void;
 }
