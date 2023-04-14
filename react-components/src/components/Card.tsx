@@ -13,7 +13,6 @@ export function Card({ person, onShowDetails }: CardProps) {
         data-testid="card-description"
         className="card-description"
         onClick={() => {
-          console.log(person.id);
           dispatch(setId(person.id));
           onShowDetails();
         }}

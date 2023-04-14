@@ -1,23 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { IdProps } from '../date/types_date';
-import { searchIdLocalStorage } from './searchIdLocalStorage';
+import { searchIdStore } from './searchIdStore';
+import { useDispatch, useSelector } from 'react-redux';
+import { setLike } from '../redux/features/likeCardSlice';
+import { RootState } from 'store';
 
 export function ImageLike(props: IdProps) {
-  const [isLike, setIsLike] = useState(searchIdLocalStorage(props.id));
+  const dispatch = useDispatch();
+  const likes = useSelector((state: RootState) => state.likes.likes);
+  const [isLike, setIsLike] = useState(searchIdStore(likes, props.id));
 
   useEffect(() => {
     const id = props.id;
-    const likes: Array<{ id: number; isLike: boolean }> = JSON.parse(
-      localStorage.getItem('likes') || '[]'
-    );
     const index = likes.findIndex((elem) => elem.id === id);
+    let newLikes: { id: number; isLike: boolean }[] = [];
     if (index !== -1) {
-      likes[index].isLike = isLike;
+      newLikes = [...likes.slice(0, index), { id: id, isLike: isLike }, ...likes.slice(index + 1)];
     } else {
-      likes.push({ id: id, isLike: isLike });
+      newLikes = [...likes, { id: id, isLike: isLike }];
     }
-    localStorage.setItem('likes', JSON.stringify(likes));
-  });
+    if (isLike !== searchIdStore(likes, props.id)) {
+      dispatch(setLike(newLikes));
+    }
+  }, [dispatch, isLike, likes, props.id]);
 
   const handleClick = () => {
     setIsLike(!isLike);

@@ -48,10 +48,7 @@ export interface CardProps {
 }
 
 export interface CardDetailsProps {
-  // person: Person | null;
   onClose: () => void;
-  /*   onError: boolean;
-  onLoading: boolean; */
 }
 
 export interface ErrorProps {
@@ -65,13 +62,6 @@ export interface ProductProps {
 export interface IdProps {
   id: number;
 }
-
-/* export interface SearchBarProps {
-  onHandleSearch: () => void;
-  onHandleLocalStorage: (value: string) => void;
-  inputValue: string;
-  onSubmitForm: () => void;
-} */
 
 export type PersonForm = {
   name: string;
