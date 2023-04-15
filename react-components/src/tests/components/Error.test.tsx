@@ -24,14 +24,14 @@ afterEach(() => {
 
 describe('Error', () => {
   it('should be render on HomePage', () => {
-    render(<Error onError={false} />);
+    render(<Error onMini={false} />);
 
     expect(screen.getByTestId('title-error')).toBeInTheDocument();
     expect(screen.getByTestId('img-error')).toHaveClass('imageError');
   });
 
   it('renders about page', () => {
-    render(<Error onError={true} />);
+    render(<Error onMini={true} />);
 
     expect(screen.getByTestId('img-error')).toHaveClass('imageError');
   });

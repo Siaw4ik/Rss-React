@@ -6,6 +6,8 @@ import '@testing-library/jest-dom';
 import 'jest';
 import { CardList } from '../../components/CardList';
 import { Person } from '../../date/types_date';
+import { Provider } from 'react-redux';
+import { store } from '../../store';
 
 let container: HTMLDivElement | null = null;
 beforeEach(() => {
@@ -73,8 +75,12 @@ const mockPersons: Person[] = [
 
 describe('test CardList', () => {
   it('renders card', () => {
-    const handleClickCard = jest.fn();
-    render(<CardList onCardClick={handleClickCard} persons={mockPersons} />);
+    const onShowDetails = jest.fn();
+    render(
+      <Provider store={store}>
+        <CardList onShowDetails={onShowDetails} persons={mockPersons} />
+      </Provider>
+    );
     const containerCards = screen.getByTestId('container_cards');
 
     expect(containerCards).toBeInTheDocument();

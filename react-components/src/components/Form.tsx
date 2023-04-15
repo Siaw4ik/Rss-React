@@ -57,7 +57,7 @@ export function Form({ showModalWindow }: FormProps) {
       <div className="forms_div">
         <p className="forms_div-title">Species</p>
         <select
-          data-testid="category-select"
+          data-testid="species-select"
           defaultValue=""
           {...register('species', { required: 'Сhoose a value in the field' })}
         >
@@ -84,6 +84,7 @@ export function Form({ showModalWindow }: FormProps) {
       <div className="forms_div">
         <p className="forms_div-title">Status</p>
         <select
+          data-testid="status-select"
           defaultValue=""
           {...register('status', { required: 'Сhoose a value in the field' })}
         >
@@ -102,6 +103,7 @@ export function Form({ showModalWindow }: FormProps) {
       <div className="forms_div">
         <p className="forms_div-title">Location</p>
         <input
+          data-testid="location-input"
           type="text"
           {...register('location', {
             required: 'Enter a value in the field',
@@ -120,7 +122,7 @@ export function Form({ showModalWindow }: FormProps) {
           <div>
             <p>Male</p>
             <input
-              data-testid="presence-radio1"
+              data-testid="gender-radio1"
               type="radio"
               value="Male"
               {...register('gender', { required: 'Сhoose one of the values' })}
@@ -131,7 +133,7 @@ export function Form({ showModalWindow }: FormProps) {
             <input
               type="radio"
               value="Female"
-              data-testid="presence-radio2"
+              data-testid="gender-radio2"
               {...register('gender', { required: 'Сhoose one of the values' })}
             />
           </div>

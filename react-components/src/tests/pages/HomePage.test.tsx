@@ -8,6 +8,8 @@ import 'jest';
 import { HomePage } from '../../pages/HomePage';
 import { server } from '../mocks/server';
 import 'whatwg-fetch';
+import { Provider } from 'react-redux';
+import { store } from '../../store';
 
 let container: HTMLDivElement | null = null;
 
@@ -32,9 +34,11 @@ describe('Home Page', () => {
   it('renders home page', async () => {
     await act(async () => {
       render(
-        <BrowserRouter>
-          <HomePage />
-        </BrowserRouter>
+        <Provider store={store}>
+          <BrowserRouter>
+            <HomePage />
+          </BrowserRouter>
+        </Provider>
       );
     });
     const homeTitle = screen.getByTestId('homepage-h1');
@@ -44,9 +48,11 @@ describe('Home Page', () => {
   it('renders on homepage loader', async () => {
     await act(async () => {
       render(
-        <BrowserRouter>
-          <HomePage />
-        </BrowserRouter>
+        <Provider store={store}>
+          <BrowserRouter>
+            <HomePage />
+          </BrowserRouter>
+        </Provider>
       );
     });
 

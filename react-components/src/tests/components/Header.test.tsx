@@ -44,7 +44,7 @@ describe('About Page', () => {
 
     const homeLink = screen.getByText('Home');
     const aboutLink = screen.getByText('About');
-    const addProductLink = screen.getByText('Add Product');
+    const addProductLink = screen.getByText('Form');
 
     expect(homeLink).toHaveStyle('color: gold');
     expect(aboutLink).not.toHaveStyle('color: gold');

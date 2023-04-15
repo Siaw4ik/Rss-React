@@ -1,4 +1,4 @@
-/* import React from 'react';
+import React from 'react';
 import { unmountComponentAtNode } from 'react-dom';
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
@@ -21,29 +21,27 @@ afterEach(() => {
   }
 });
 
-const mockProductForm = {
-  title: 'Product',
-  description: 'product product roduct',
+const mockPersonForm = {
+  name: 'Product',
+  species: 'Animal',
   date: '2023-05-03',
-  category: 'jewelery',
-  presence: 'available',
-  count: 22,
-  price: 22,
+  status: 'Alive',
+  gender: 'Male',
+  location: 'planet',
   consent: 'true',
-  image: 'https://i.pinimg.com/564x/6f/4b/b0/6f4bb0df17555f2b09bad03b0d828c65.jpg',
+  imageUrl: 'https://i.pinimg.com/564x/6f/4b/b0/6f4bb0df17555f2b09bad03b0d828c65.jpg',
 };
 
 describe('test Card', () => {
   it('renders card', () => {
-    const { getByText, getByAltText } = render(<CardForm product={mockProductForm} key={2} />);
+    const { getByText, getByAltText } = render(<CardForm person={mockPersonForm} key={2} />);
 
-    expect(getByAltText('image product')).toHaveAttribute('src', mockProductForm.image);
-    expect(getByText(mockProductForm.title)).toBeInTheDocument();
-    expect(getByText(mockProductForm.description)).toBeInTheDocument();
-    expect(getByText(mockProductForm.category)).toBeInTheDocument();
-    expect(getByText(`Count: ${mockProductForm.count}`)).toBeInTheDocument();
-    expect(getByText(`Price: $${mockProductForm.price}`)).toBeInTheDocument();
-    expect(getByText(mockProductForm.presence)).toBeInTheDocument();
-    expect(getByText(mockProductForm.date)).toBeInTheDocument();
+    expect(getByAltText('image product')).toHaveAttribute('src', mockPersonForm.imageUrl);
+    expect(getByText(mockPersonForm.name)).toBeInTheDocument();
+    expect(getByText('Species: Animal')).toBeInTheDocument();
+    expect(getByText('Status: Alive')).toBeInTheDocument();
+    expect(getByText('Gender: Male')).toBeInTheDocument();
+    expect(getByText('Location: planet')).toBeInTheDocument();
+    expect(getByText(mockPersonForm.date)).toBeInTheDocument();
   });
-}); */
+});

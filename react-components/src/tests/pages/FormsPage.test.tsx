@@ -7,6 +7,8 @@ import '@testing-library/jest-dom/extend-expect';
 import '@testing-library/jest-dom';
 import 'jest';
 import { FormsPage } from '../../pages/FormsPage';
+import { Provider } from 'react-redux';
+import { store } from '../../store';
 
 let container: HTMLDivElement | null = null;
 beforeEach(() => {
@@ -31,9 +33,11 @@ describe('Form Page', () => {
 
   it('renders about page', () => {
     render(
-      <BrowserRouter>
-        <FormsPage />
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <FormsPage />
+        </BrowserRouter>
+      </Provider>
     );
     const formTitle = screen.getByTestId('formpage-formtitle');
     expect(formTitle).toBeInTheDocument();
@@ -43,9 +47,11 @@ describe('Form Page', () => {
 
   it('submitting the form calls the addProduct and showModalWindow functions', async () => {
     const { getByTestId } = render(
-      <BrowserRouter>
-        <FormsPage />
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <FormsPage />
+        </BrowserRouter>
+      </Provider>
     );
     const file = new File(['test'], 'test.png', { type: 'image/png' });
 
@@ -53,16 +59,13 @@ describe('Form Page', () => {
     expect(containerCards.children.length).toBe(0);
 
     fireEvent.change(getByTestId('name-input'), { target: { value: 'SlawaProduct' } });
-    fireEvent.change(getByTestId('description-input'), {
-      target: { value: 'Product product product' },
-    });
-    fireEvent.change(getByTestId('price-input'), { target: { value: '10' } });
-    fireEvent.change(getByTestId('count-input'), { target: { value: '5' } });
-    fireEvent.change(getByTestId('category-select'), { target: { value: 'jewelery' } });
-    fireEvent.click(getByTestId('presence-radio1'));
+    fireEvent.change(getByTestId('species-select'), { target: { value: 'Animal' } });
+    fireEvent.change(getByTestId('status-select'), { target: { value: 'Alive' } });
+    fireEvent.change(getByTestId('location-input'), { target: { value: 'planet' } });
+    fireEvent.click(getByTestId('gender-radio1'));
     fireEvent.change(getByTestId('date-input'), { target: { value: '2023-03-26' } });
-    fireEvent.click(getByTestId('consent-check'));
     fireEvent.change(getByTestId('image-input'), { target: { files: [file] } });
+    fireEvent.click(getByTestId('consent-check'));
     fireEvent.click(getByTestId('button'));
 
     waitFor(() => {

@@ -6,6 +6,9 @@ import '@testing-library/jest-dom';
 import 'jest';
 import { Card } from '../../components/Card';
 import { Person } from '../../date/types_date';
+import { Provider } from 'react-redux';
+import { store } from '../../store';
+import { setId } from '../../redux/features/personsSlice';
 
 let container: HTMLDivElement | null = null;
 beforeEach(() => {
@@ -48,8 +51,13 @@ const mockPerson: Person = {
 
 describe('test Card', () => {
   it('renders card', () => {
-    const onCardClick = jest.fn();
-    render(<Card person={mockPerson} key={1} onCardClick={onCardClick} />);
+    const onShowDetails = jest.fn();
+    const mockDispatch = jest.spyOn(store, 'dispatch');
+    render(
+      <Provider store={store}>
+        <Card person={mockPerson} key={1} onShowDetails={onShowDetails} />
+      </Provider>
+    );
     const card = screen.getByTestId('card');
     const cardDescription = screen.getByTestId('card-description');
 
@@ -57,7 +65,7 @@ describe('test Card', () => {
 
     fireEvent.click(cardDescription);
 
-    expect(onCardClick).toHaveBeenCalledTimes(1);
-    expect(onCardClick).toHaveBeenCalledWith(mockPerson.id);
+    expect(onShowDetails).toHaveBeenCalledTimes(1);
+    expect(mockDispatch).toHaveBeenCalledWith(setId(mockPerson.id));
   });
 });

@@ -5,6 +5,9 @@ import '@testing-library/jest-dom/extend-expect';
 import '@testing-library/jest-dom';
 import 'jest';
 import { SearchBar } from '../../components/SearchBar';
+import { Provider } from 'react-redux';
+import { store } from '../../store';
+import { setInputValue } from '../../redux/features/searchSlice';
 
 let container: HTMLDivElement | null = null;
 beforeEach(() => {
@@ -22,21 +25,11 @@ afterEach(() => {
 });
 
 describe('Search Bar', () => {
-  beforeEach(() => {
-    window.localStorage.clear();
-  });
-
-  const handleSearch = jest.fn();
-  const handleLocalStorage = jest.fn();
-  const mockInpunValue = 'slawa';
-
   it('renders Search Bar', () => {
     render(
-      <SearchBar
-        onHandleSearch={handleSearch}
-        onHandleLocalStorage={handleLocalStorage}
-        inputValue={mockInpunValue}
-      />
+      <Provider store={store}>
+        <SearchBar />
+      </Provider>
     );
     const searchInput = screen.getByTestId('searchbar');
     const searchImage = screen.getByTestId('search-image');
@@ -46,44 +39,38 @@ describe('Search Bar', () => {
 
   it('change Search Bar input value', () => {
     render(
-      <SearchBar
-        onHandleSearch={handleSearch}
-        onHandleLocalStorage={handleLocalStorage}
-        inputValue={mockInpunValue}
-      />
+      <Provider store={store}>
+        <SearchBar />
+      </Provider>
     );
     const searchInput = screen.getByTestId('searchbar') as HTMLInputElement;
     fireEvent.change(searchInput, { target: { value: 'slawacool' } });
     waitFor(() => {
       expect(searchInput).toHaveValue('slawacool');
-      expect(handleLocalStorage).toHaveBeenCalledWith('slawacool');
     });
   });
 
   it('submit Search Bar input value', () => {
+    const mockDispatch = jest.spyOn(store, 'dispatch');
+    const mockValue = 'slawa';
     render(
-      <SearchBar
-        onHandleSearch={handleSearch}
-        onHandleLocalStorage={handleLocalStorage}
-        inputValue={mockInpunValue}
-      />
+      <Provider store={store}>
+        <SearchBar />
+      </Provider>
     );
     const searchInput = screen.getByTestId('searchbar') as HTMLInputElement;
     const searchForm = screen.getByTestId('searchbarForm') as HTMLInputElement;
 
-    fireEvent.change(searchInput, { target: { value: 'slawacool' } });
+    fireEvent.change(searchInput, { target: { value: mockValue } });
 
     waitFor(() => {
-      expect(searchInput).toHaveValue('slawacool');
-      expect(handleLocalStorage).toHaveBeenCalledWith('slawacool');
+      expect(searchInput).toHaveValue(mockValue);
     });
 
     fireEvent.submit(searchForm);
 
     waitFor(() => {
-      expect(handleLocalStorage).toHaveBeenCalledWith('slawacool');
-      expect(JSON.parse(window.localStorage.getItem('searchInput') as string)).toBe('slawacool');
-      expect(handleSearch).toHaveBeenCalled();
+      expect(mockDispatch).toHaveBeenCalledWith(setInputValue(mockValue));
     });
   });
 });
