@@ -27,7 +27,7 @@
     "fix": "eslint --ext .tsx,.ts src/ --fix",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "jest --detectOpenHandles --forceExit ----coverage --collectCoverageFrom='./src/components/**/*.{ts,tsx}' --collectCoverageFrom='./src/pages/**/*.{ts,tsx}' --collectCoverageFrom='src/**/*.tsx' --collectCoverageFrom='./src/module/**/*.{ts,tsx}'",
+    "test": "jest --detectOpenHandles --forceExit ----coverage --collectCoverageFrom='./src/components/**/*.{ts,tsx}' --collectCoverageFrom='./src/pages/**/*.{ts,tsx}' --collectCoverageFrom='src/**/*.tsx' --collectCoverageFrom='./src/module/**/*.{ts,tsx}' --collectCoverageFrom='./src/redux/**/*.{ts,tsx}' --coveragePathIgnorePatterns='/src/index.tsx'",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"

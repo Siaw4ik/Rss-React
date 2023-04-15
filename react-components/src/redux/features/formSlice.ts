@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { PersonForm } from 'date/types_date';
 
-interface PersonsFormState {
+export interface PersonsFormState {
   personsForm: PersonForm[];
 }
 

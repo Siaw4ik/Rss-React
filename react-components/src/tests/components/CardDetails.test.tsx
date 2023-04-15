@@ -6,9 +6,22 @@ import '@testing-library/jest-dom/extend-expect';
 import '@testing-library/jest-dom';
 import 'jest';
 import { CardDetails } from '../../components/CardDetails';
-// import { Person } from '../../date/types_date';
 import { Provider } from 'react-redux';
 import { store } from '../../store';
+import { server } from '../mocks/server';
+import { rick_mortiApi } from '../../redux/services/rick_morti';
+import { setId } from '../../redux/features/personsSlice';
+
+beforeAll(() => {
+  server.listen();
+});
+
+afterEach(() => {
+  server.resetHandlers();
+  store.dispatch(rick_mortiApi.util.resetApiState());
+});
+
+afterAll(() => server.close());
 
 let container: HTMLDivElement | null = null;
 beforeEach(() => {
@@ -25,33 +38,11 @@ afterEach(() => {
   }
 });
 
-/* const mockPerson: Person = {
-  created: '2017-11-04T19:22:43.665Z',
-  episode: [
-    'https://rickandmortyapi.com/api/episode/6',
-    'https://rickandmortyapi.com/api/episode/7',
-  ],
-  gender: 'Female',
-  id: 4,
-  image: 'https://rickandmortyapi.com/api/character/avatar/4.jpeg',
-  location: {
-    name: 'Earth (Replacement Dimension)',
-    url: 'https://rickandmortyapi.com/api/location/20',
-  },
-  name: 'Beth Smith',
-  origin: {
-    name: 'Earth (Replacement Dimension)',
-    url: 'https://rickandmortyapi.com/api/location/20',
-  },
-  species: 'Human',
-  status: 'Alive',
-  type: '',
-  url: 'https://rickandmortyapi.com/api/character/4',
-}; */
-
 describe('Modal window CardDetails', () => {
-  it('should be render on HomePage', () => {
-    render(
+  it('should be render on HomePage', async () => {
+    store.dispatch(setId(197));
+
+    const { findByTestId, getByText } = render(
       <Provider store={store}>
         <CardDetails onClose={() => {}} />
       </Provider>
@@ -59,6 +50,16 @@ describe('Modal window CardDetails', () => {
 
     expect(screen.getByTestId('container-cardDetails')).toBeInTheDocument();
     expect(screen.getByTestId('cardDetails-cross')).toBeInTheDocument();
+
+    const cardDetailsName = await findByTestId('person-name');
+
+    await waitFor(() => {
+      expect(cardDetailsName).toBeInTheDocument();
+    });
+
+    await waitFor(() => {
+      expect(getByText('Kyle')).toBeInTheDocument();
+    });
   });
 
   it('should be close', () => {
@@ -78,26 +79,18 @@ describe('Modal window CardDetails', () => {
     });
   });
 
-  /* it('should not be render on HomePage', () => {
-    render(<CardDetails person={null} onClose={() => {}} onError={false} onLoading={false} />);
-
-    expect(screen.queryByTestId('container-cardDetails')).toBeNull();
-    expect(screen.queryByTestId('person-name')).toBeNull();
-  });
-
-  it('renders the Loader component when onLoading is true', () => {
-    const { getByTestId } = render(
-      <CardDetails person={mockPerson} onClose={() => {}} onError={false} onLoading={true} />
+  it('should draw error if response fail', async () => {
+    store.dispatch(setId(1111));
+    const { findByTestId } = render(
+      <Provider store={store}>
+        <CardDetails onClose={() => {}} />
+      </Provider>
     );
 
-    expect(getByTestId('loader')).toBeInTheDocument();
+    const errorMessage = await findByTestId('title-error');
+
+    await waitFor(() => {
+      expect(errorMessage).toBeInTheDocument();
+    });
   });
-
-  it('should draw error if response fail', () => {
-    const { getByTestId } = render(
-      <CardDetails person={mockPerson} onClose={() => {}} onError={true} onLoading={false} />
-    );
-
-    expect(getByTestId('title-error')).toBeInTheDocument();
-  }); */
 });

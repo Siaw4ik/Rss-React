@@ -26,12 +26,11 @@ afterEach(() => {
 });
 
 describe('Form Page', () => {
-  const showModalWindow = jest.fn();
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it('renders about page', () => {
+  it('renders form page', () => {
     render(
       <Provider store={store}>
         <BrowserRouter>
@@ -43,6 +42,9 @@ describe('Form Page', () => {
     expect(formTitle).toBeInTheDocument();
     const formCardsTirle = screen.getByTestId('formpage-cardsformtitle');
     expect(formCardsTirle).toBeInTheDocument();
+
+    const showModalWindow = screen.getByTestId('show-modal-button');
+    expect(showModalWindow).toHaveClass('modalWindow');
   });
 
   it('submitting the form calls the addProduct and showModalWindow functions', async () => {
@@ -54,6 +56,9 @@ describe('Form Page', () => {
       </Provider>
     );
     const file = new File(['test'], 'test.png', { type: 'image/png' });
+
+    const showModalWindow = screen.getByTestId('show-modal-button');
+    expect(showModalWindow).toHaveClass('modalWindow');
 
     const containerCards = getByTestId('containerCards');
     expect(containerCards.children.length).toBe(0);

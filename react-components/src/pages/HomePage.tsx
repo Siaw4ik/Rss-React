@@ -66,6 +66,7 @@ export function HomePage() {
         <Header />
         {isShow && (
           <div
+            data-testid="cardDetails-shadow"
             className="cardDetails-shadow"
             onClick={() => {
               setIsShow(false);

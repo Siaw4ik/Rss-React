@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface likeCardState {
+export interface likeCardState {
   likes: { id: number; isLike: boolean }[];
 }
 
