@@ -1,13 +1,11 @@
 import { CardList } from '../components/CardList';
 import React, { useState, useEffect } from 'react';
-import { Header } from '../components/Header';
-import { Footer } from '../components/Footer';
 import { SearchBar } from '../components/SearchBar';
 import { CardDetails } from '../components/CardDetails';
 import { Error } from '../components/Error';
 import { Loader } from '../components/Loader';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from 'store';
+import { RootState } from '../store';
 import { useGetPersonsByNameQuery, useGetPersonsStartQuery } from '../redux/services/rick_morti';
 import { changePersons } from '../redux/features/personsSlice';
 
@@ -63,7 +61,6 @@ export function HomePage() {
   return (
     <div data-testid="container" className="container">
       <div className="container_header-main">
-        <Header />
         {isShow && (
           <div
             data-testid="cardDetails-shadow"
@@ -94,7 +91,6 @@ export function HomePage() {
           </div>
         </main>
       </div>
-      <Footer />
     </div>
   );
 }
