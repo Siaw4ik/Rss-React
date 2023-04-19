@@ -1,5 +1,5 @@
 import reducer, { changePersons, setId, PersonsState } from '../../../redux/features/personsSlice';
-import { Person } from 'date/types_date';
+import { Person } from '../../../date/types_date';
 
 test('should return the initial state', () => {
   expect(reducer(undefined, { type: undefined })).toEqual({

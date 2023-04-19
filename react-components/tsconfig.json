@@ -23,6 +23,16 @@
       "@/*": ["src/*"]
     },
   },
-  "include": ["./src"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": ["./src", "vite.config.ts", "server.ts"],
+  "references": [{ "path": "./tsconfig.node.json" }],
+
+  "ts-node": {
+    "files": true,
+    "transpileOnly": true,
+    "esm": true,
+    "compilerOptions": {
+      "moduleResolution": "Node16",
+      "noImplicitAny": true,
+    }
+  }
 }

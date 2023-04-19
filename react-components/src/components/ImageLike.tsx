@@ -3,7 +3,7 @@ import { IdProps } from '../date/types_date';
 import { searchIdStore } from './searchIdStore';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLike } from '../redux/features/likeCardSlice';
-import { RootState } from 'store';
+import { RootState } from '../store';
 
 export function ImageLike(props: IdProps) {
   const dispatch = useDispatch();

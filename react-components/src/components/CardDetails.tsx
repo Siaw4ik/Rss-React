@@ -1,10 +1,10 @@
-import { CardDetailsProps, Person } from 'date/types_date';
+import { CardDetailsProps, Person } from '../date/types_date';
 import React, { useEffect, useState } from 'react';
 import cross from '../assets/close.svg';
 import { Error } from './Error';
 import { Loader } from './Loader';
 import { useSelector } from 'react-redux';
-import { RootState } from 'store';
+import { RootState } from '../store';
 import { useGetOnePersonByIdQuery } from '../redux/services/rick_morti';
 
 export function CardDetails({ onClose }: CardDetailsProps) {

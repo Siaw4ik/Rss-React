@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Person } from 'date/types_date';
+import { Person } from '../../date/types_date';
 
 export interface PersonsState {
   persons: Person[];

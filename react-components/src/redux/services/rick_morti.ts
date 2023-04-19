@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { RickMortiResponse, Person } from 'date/types_date';
+import { RickMortiResponse, Person } from '../../date/types_date';
 
 export const rick_mortiApi = createApi({
   reducerPath: 'rick_mortiApi',

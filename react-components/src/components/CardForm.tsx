@@ -1,4 +1,4 @@
-import { CardFormProps } from 'date/types_date';
+import { CardFormProps } from '../date/types_date';
 import React from 'react';
 
 export function CardForm(props: CardFormProps) {

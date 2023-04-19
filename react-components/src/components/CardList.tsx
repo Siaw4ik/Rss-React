@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card } from './Card';
-import { CardListProps } from 'date/types_date';
+import { CardListProps } from '../date/types_date';
 
 export function CardList({ persons, onShowDetails }: CardListProps) {
   return (

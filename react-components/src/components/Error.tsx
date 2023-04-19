@@ -1,6 +1,6 @@
 import React from 'react';
 import imageError from '../assets/rickandmortiError.png';
-import { ErrorProps } from 'date/types_date';
+import { ErrorProps } from '../date/types_date';
 
 export function Error({ onMini }: ErrorProps) {
   return (
