@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Header } from '../components/Header';
+import { Footer } from '../components/Footer';
 import { Form } from '../components/Form';
 import { CardForm } from '../components/CardForm';
 import { RootState } from '../store';
@@ -14,6 +16,7 @@ export function FormsPage() {
 
   return (
     <div className="container">
+      <Header />
       <main className="main">
         <div className="container_formpage">
           <div className="container_form-block">
@@ -36,6 +39,7 @@ export function FormsPage() {
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   );
 }
