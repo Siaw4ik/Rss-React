@@ -3,11 +3,11 @@ import { unmountComponentAtNode } from 'react-dom';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import '@testing-library/jest-dom';
-import 'jest';
+import { vi } from 'vitest';
 import { Card } from '../../components/Card';
 import { Person } from '../../date/types_date';
 import { Provider } from 'react-redux';
-import { store } from '../../redux/store';
+import { setupStore } from '../../redux/store';
 import { setId } from '../../redux/features/personsSlice';
 
 let container: HTMLDivElement | null = null;
@@ -50,9 +50,10 @@ const mockPerson: Person = {
 };
 
 describe('test Card', () => {
+  const store = setupStore();
   it('renders card', () => {
-    const onShowDetails = jest.fn();
-    const mockDispatch = jest.spyOn(store, 'dispatch');
+    const onShowDetails = vi.fn();
+    const mockDispatch = vi.spyOn(store, 'dispatch');
     render(
       <Provider store={store}>
         <Card person={mockPerson} key={1} onShowDetails={onShowDetails} />

@@ -3,11 +3,13 @@ import { unmountComponentAtNode } from 'react-dom';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import '@testing-library/jest-dom';
-import 'jest';
+import { vi } from 'vitest';
 import { SearchBar } from '../../components/SearchBar';
 import { Provider } from 'react-redux';
-import { store } from '../../redux/store';
+import { setupStore } from '../../redux/store';
 import { setInputValue } from '../../redux/features/searchSlice';
+
+const store = setupStore();
 
 let container: HTMLDivElement | null = null;
 beforeEach(() => {
@@ -51,7 +53,7 @@ describe('Search Bar', () => {
   });
 
   it('submit Search Bar input value', () => {
-    const mockDispatch = jest.spyOn(store, 'dispatch');
+    const mockDispatch = vi.spyOn(store, 'dispatch');
     const mockValue = 'slawa';
     render(
       <Provider store={store}>

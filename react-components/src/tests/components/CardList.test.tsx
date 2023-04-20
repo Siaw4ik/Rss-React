@@ -3,11 +3,13 @@ import { unmountComponentAtNode } from 'react-dom';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import '@testing-library/jest-dom';
-import 'jest';
+import { vi } from 'vitest';
 import { CardList } from '../../components/CardList';
 import { Person } from '../../date/types_date';
 import { Provider } from 'react-redux';
-import { store } from '../../redux/store';
+import { setupStore } from '../../redux/store';
+
+const store = setupStore();
 
 let container: HTMLDivElement | null = null;
 beforeEach(() => {
@@ -75,7 +77,7 @@ const mockPersons: Person[] = [
 
 describe('test CardList', () => {
   it('renders card', () => {
-    const onShowDetails = jest.fn();
+    const onShowDetails = vi.fn();
     render(
       <Provider store={store}>
         <CardList onShowDetails={onShowDetails} persons={mockPersons} />

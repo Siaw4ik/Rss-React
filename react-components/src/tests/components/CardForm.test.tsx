@@ -3,7 +3,6 @@ import { unmountComponentAtNode } from 'react-dom';
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import '@testing-library/jest-dom';
-import 'jest';
 import { CardForm } from '../../components/CardForm';
 
 let container: HTMLDivElement | null = null;

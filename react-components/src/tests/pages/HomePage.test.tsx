@@ -4,13 +4,14 @@ import { render, screen, act, fireEvent, waitFor } from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom';
 import '@testing-library/jest-dom/extend-expect';
 import '@testing-library/jest-dom';
-import 'jest';
 import { HomePage } from '../../pages/HomePage';
 import { server } from '../mocks/server';
 import 'whatwg-fetch';
 import { Provider } from 'react-redux';
-import { store } from '../../redux/store';
+import { setupStore } from '../../redux/store';
 import { rick_mortiApi } from '../../redux/services/rick_morti';
+
+const store = setupStore();
 
 beforeAll(() => {
   server.listen();

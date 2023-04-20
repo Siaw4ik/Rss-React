@@ -4,7 +4,6 @@ import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import '@testing-library/jest-dom/extend-expect';
 import '@testing-library/jest-dom';
-import 'jest';
 import { NotFoundPage } from '../../pages/NotFoundPage';
 
 let container: HTMLDivElement | null = null;

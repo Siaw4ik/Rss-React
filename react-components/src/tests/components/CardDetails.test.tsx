@@ -4,13 +4,15 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 
 import '@testing-library/jest-dom/extend-expect';
 import '@testing-library/jest-dom';
-import 'jest';
+import { vi } from 'vitest';
 import { CardDetails } from '../../components/CardDetails';
 import { Provider } from 'react-redux';
-import { store } from '../../redux/store';
+import { setupStore } from '../../redux/store';
 import { server } from '../mocks/server';
 import { rick_mortiApi } from '../../redux/services/rick_morti';
 import { setId } from '../../redux/features/personsSlice';
+
+const store = setupStore();
 
 beforeAll(() => {
   server.listen();
@@ -63,7 +65,7 @@ describe('Modal window CardDetails', () => {
   });
 
   it('should be close', () => {
-    const onCloseMock = jest.fn();
+    const onCloseMock = vi.fn();
     render(
       <Provider store={store}>
         <CardDetails onClose={() => {}} />

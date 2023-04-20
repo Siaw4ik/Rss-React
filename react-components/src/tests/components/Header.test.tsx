@@ -6,7 +6,6 @@ import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom/extend-expect';
 import '@testing-library/jest-dom';
-import 'jest';
 import { Header } from '../../components/Header';
 
 let container: HTMLDivElement | null = null;

@@ -1,14 +1,17 @@
-global.URL.createObjectURL = jest.fn();
 import React from 'react';
 import { unmountComponentAtNode } from 'react-dom';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import '@testing-library/jest-dom/extend-expect';
 import '@testing-library/jest-dom';
-import 'jest';
+import { vi } from 'vitest';
 import { FormsPage } from '../../pages/FormsPage';
 import { Provider } from 'react-redux';
-import { store } from '../../redux/store';
+import { setupStore } from '../../redux/store';
+
+global.URL.createObjectURL = vi.fn();
+
+const store = setupStore();
 
 let container: HTMLDivElement | null = null;
 beforeEach(() => {
@@ -27,7 +30,7 @@ afterEach(() => {
 
 describe('Form Page', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders form page', () => {

@@ -1,15 +1,19 @@
-global.URL.createObjectURL = jest.fn();
 import React from 'react';
+import { vi } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { Form } from '../../components/Form';
 import { Provider } from 'react-redux';
-import { store } from '../../redux/store';
+import { setupStore } from '../../redux/store';
 import { addPerson } from '../../redux/features/formSlice';
 
+global.URL.createObjectURL = vi.fn();
+
+const store = setupStore();
+
 describe('Form Page', () => {
-  const addProduct = jest.fn();
-  const showModalWindow = jest.fn();
-  const mockDispatch = jest.spyOn(store, 'dispatch');
+  const addProduct = vi.fn();
+  const showModalWindow = vi.fn();
+  const mockDispatch = vi.spyOn(store, 'dispatch');
   it('submitting the form calls the addProduct and showModalWindow functions', async () => {
     const { getByTestId } = render(
       <Provider store={store}>
