@@ -1,4 +1,6 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import * as toolkitRaw from '@reduxjs/toolkit';
+export type TypeToolkitRaw = typeof toolkitRaw & { default?: unknown };
+const { createSlice } = ((toolkitRaw as TypeToolkitRaw).default ?? toolkitRaw) as typeof toolkitRaw;
 
 export interface likeCardState {
   likes: { id: number; isLike: boolean }[];
@@ -12,7 +14,7 @@ export const likeCardSlice = createSlice({
   name: 'likes',
   initialState,
   reducers: {
-    setLike: (state, action: PayloadAction<{ id: number; isLike: boolean }[]>) => {
+    setLike: (state, action: toolkitRaw.PayloadAction<{ id: number; isLike: boolean }[]>) => {
       state.likes = action.payload;
     },
   },

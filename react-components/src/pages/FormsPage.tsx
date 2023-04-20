@@ -3,7 +3,7 @@ import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import { Form } from '../components/Form';
 import { CardForm } from '../components/CardForm';
-import { RootState } from '../store';
+import { RootState } from '../redux/store';
 import { useSelector } from 'react-redux';
 
 export function FormsPage() {

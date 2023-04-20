@@ -7,7 +7,7 @@ import 'jest';
 import { Card } from '../../components/Card';
 import { Person } from '../../date/types_date';
 import { Provider } from 'react-redux';
-import { store } from '../../store';
+import { store } from '../../redux/store';
 import { setId } from '../../redux/features/personsSlice';
 
 let container: HTMLDivElement | null = null;

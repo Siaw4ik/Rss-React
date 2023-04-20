@@ -1,10 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import { store } from './store';
+import { setupStore } from './redux/store';
 import { Provider } from 'react-redux';
 
 import './index.css';
+
+const store = setupStore();
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(

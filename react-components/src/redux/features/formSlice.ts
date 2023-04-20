@@ -1,4 +1,6 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import * as toolkitRaw from '@reduxjs/toolkit';
+export type TypeToolkitRaw = typeof toolkitRaw & { default?: unknown };
+const { createSlice } = ((toolkitRaw as TypeToolkitRaw).default ?? toolkitRaw) as typeof toolkitRaw;
 import { PersonForm } from '../../date/types_date';
 
 export interface PersonsFormState {
@@ -13,7 +15,7 @@ export const formSlice = createSlice({
   name: 'formCards',
   initialState,
   reducers: {
-    addPerson: (state, action: PayloadAction<PersonForm>) => {
+    addPerson: (state, action: toolkitRaw.PayloadAction<PersonForm>) => {
       state.personsForm.push(action.payload);
     },
   },

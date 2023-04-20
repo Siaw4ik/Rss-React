@@ -1,111 +1,69 @@
+import { readFile } from 'fs/promises';
+import { dirname, resolve } from 'path';
 import express from 'express';
-import fsp from 'fs/promises';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
-import { PipeableStream, RenderToPipeableStreamOptions } from 'react-dom/server';
-import { ViteDevServer } from 'vite';
+import { fileURLToPath } from 'url';
+import { createServer } from 'vite';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+import { setupStore } from './src/redux/store';
+import { RickMortiResponse } from './src/date/types_date';
 
-const root = process.cwd();
-const isProduction = process.env.NODE_ENV === 'production';
+const app = express();
 
-function resolve(p: string) {
-  return path.resolve(__dirname, p);
-}
+const PORT = 8000;
 
-async function createServer() {
-  const app = express();
-  /**
-   * @type {import('vite').ViteDevServer}
-   */
-  let vite: ViteDevServer;
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const htmlIndex = resolve(__dirname, 'index.html');
 
-  if (!isProduction) {
-    vite = await (
-      await import('vite')
-    ).createServer({
-      root,
-      server: {
-        middlewareMode: true,
-        watch: {
-          usePolling: true,
-          interval: 100,
-        },
+const vite = await createServer({
+  server: { middlewareMode: true },
+  appType: 'custom',
+});
+
+app.use(vite.middlewares);
+
+app.use('*', async (req, res, next) => {
+  const url = req.originalUrl;
+
+  try {
+    const template = await readFile(htmlIndex, 'utf-8');
+
+    const htmlData = await vite.transformIndexHtml(url, template);
+
+    const [htmlStart, htmlEnd] = htmlData.split(`<!--ssr-outlet-->`);
+
+    const { render } = await vite.ssrLoadModule('./src/entry-server.tsx');
+
+    const responseCharacters = await fetch('https://rickandmortyapi.com/api/character/');
+    const initialCharacters: RickMortiResponse = await responseCharacters.json();
+
+    const store = setupStore({ persons: { persons: initialCharacters.results, id: 0 } });
+
+    const preloadedState = store.getState();
+
+    const inject = `
+    <script>
+      window.PRELOADED_STATE = ${JSON.stringify(preloadedState).replace(/</g, '\\u003c')}
+    </script>
+    `;
+
+    const { pipe } = await render(url, {
+      onShellReady() {
+        res.write(htmlStart);
+        pipe(res);
       },
-      appType: 'custom',
+
+      onAllReady() {
+        const withPreload = htmlEnd.replace('<!--preload-->', inject);
+        res.write(withPreload);
+        res.end();
+      },
     });
-
-    app.use(vite.middlewares);
-  } else {
-    app.use((await import('compression')).default());
-    app.use(express.static(resolve('dist/client')));
+  } catch (e) {
+    vite.ssrFixStacktrace(e as Error);
+    next(e);
   }
+});
 
-  app.use('*', async (req, res) => {
-    const url = req.originalUrl;
-
-    try {
-      let template: string;
-      let render: (
-        request: express.Request,
-        options: RenderToPipeableStreamOptions
-      ) => Promise<PipeableStream>;
-
-      if (!isProduction) {
-        template = await fsp.readFile(resolve('index.html'), 'utf8');
-        template = await vite.transformIndexHtml(url, template);
-        render = (await vite.ssrLoadModule('src/entry-server.tsx')).render;
-      } else {
-        template = await fsp.readFile(resolve('dist/client/index.html'), 'utf8');
-        render = (await import('./dist/server/entry-server.js'!)).render;
-      }
-
-      const parts = template.split('<!--ssr-outlet-->');
-      try {
-        res.write(parts[0]);
-        const stream = await render(req, {
-          onShellReady() {
-            stream.pipe(res);
-          },
-          // onShellError() {
-          //   // do error handling
-          // },
-          onAllReady() {
-            res.write(parts[1]);
-            res.end();
-          },
-          // onError(err) {
-          //   console.error(err);
-          // },
-        });
-      } catch (e) {
-        if (e instanceof Response && e.status >= 300 && e.status <= 399) {
-          return res.redirect(e.status, e.headers.get('Location')!);
-        }
-        throw e;
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        if (!isProduction) {
-          vite.ssrFixStacktrace(error);
-        }
-
-        console.log(error.stack);
-        res.status(500).end(error.stack);
-
-        return;
-      }
-
-      console.log(error);
-    }
-  });
-
-  return app;
-}
-
-createServer().then((app) => {
-  app.listen(3000, () => {
-    console.log('HTTP server is running at http://localhost:3000');
-  });
+app.listen(PORT, () => {
+  console.log(`Server started at http://localhost:${PORT}`);
 });

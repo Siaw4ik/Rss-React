@@ -3,7 +3,7 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { Form } from '../../components/Form';
 import { Provider } from 'react-redux';
-import { store } from '../../store';
+import { store } from '../../redux/store';
 import { addPerson } from '../../redux/features/formSlice';
 
 describe('Form Page', () => {

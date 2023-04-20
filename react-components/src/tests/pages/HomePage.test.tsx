@@ -9,7 +9,7 @@ import { HomePage } from '../../pages/HomePage';
 import { server } from '../mocks/server';
 import 'whatwg-fetch';
 import { Provider } from 'react-redux';
-import { store } from '../../store';
+import { store } from '../../redux/store';
 import { rick_mortiApi } from '../../redux/services/rick_morti';
 
 beforeAll(() => {

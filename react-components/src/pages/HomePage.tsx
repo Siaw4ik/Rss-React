@@ -7,7 +7,7 @@ import { CardDetails } from '../components/CardDetails';
 import { Error } from '../components/Error';
 import { Loader } from '../components/Loader';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../store';
+import { RootState } from '../redux/store';
 import { useGetPersonsByNameQuery, useGetPersonsStartQuery } from '../redux/services/rick_morti';
 import { changePersons } from '../redux/features/personsSlice';
 

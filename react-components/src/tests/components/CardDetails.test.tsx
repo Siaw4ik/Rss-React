@@ -7,7 +7,7 @@ import '@testing-library/jest-dom';
 import 'jest';
 import { CardDetails } from '../../components/CardDetails';
 import { Provider } from 'react-redux';
-import { store } from '../../store';
+import { store } from '../../redux/store';
 import { server } from '../mocks/server';
 import { rick_mortiApi } from '../../redux/services/rick_morti';
 import { setId } from '../../redux/features/personsSlice';

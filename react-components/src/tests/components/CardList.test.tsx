@@ -7,7 +7,7 @@ import 'jest';
 import { CardList } from '../../components/CardList';
 import { Person } from '../../date/types_date';
 import { Provider } from 'react-redux';
-import { store } from '../../store';
+import { store } from '../../redux/store';
 
 let container: HTMLDivElement | null = null;
 beforeEach(() => {

@@ -1,4 +1,6 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import * as toolkitRaw from '@reduxjs/toolkit';
+export type TypeToolkitRaw = typeof toolkitRaw & { default?: unknown };
+const { createSlice } = ((toolkitRaw as TypeToolkitRaw).default ?? toolkitRaw) as typeof toolkitRaw;
 import { Person } from '../../date/types_date';
 
 export interface PersonsState {
@@ -15,10 +17,10 @@ export const personsSlice = createSlice({
   name: 'persons',
   initialState,
   reducers: {
-    changePersons: (state, action: PayloadAction<Person[]>) => {
+    changePersons: (state, action: toolkitRaw.PayloadAction<Person[]>) => {
       state.persons = action.payload;
     },
-    setId: (state, action: PayloadAction<number>) => {
+    setId: (state, action: toolkitRaw.PayloadAction<number>) => {
       state.id = action.payload;
     },
   },

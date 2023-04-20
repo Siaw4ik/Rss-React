@@ -6,7 +6,7 @@ import '@testing-library/jest-dom';
 import 'jest';
 import { ImageLike } from '../../components/ImageLike';
 import { Provider } from 'react-redux';
-import { store } from '../../store';
+import { store } from '../../redux/store';
 
 let container: HTMLDivElement | null = null;
 beforeEach(() => {

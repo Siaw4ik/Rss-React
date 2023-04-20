@@ -6,7 +6,7 @@ import '@testing-library/jest-dom';
 import 'jest';
 import { SearchBar } from '../../components/SearchBar';
 import { Provider } from 'react-redux';
-import { store } from '../../store';
+import { store } from '../../redux/store';
 import { setInputValue } from '../../redux/features/searchSlice';
 
 let container: HTMLDivElement | null = null;

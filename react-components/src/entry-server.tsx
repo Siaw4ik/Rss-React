@@ -2,10 +2,12 @@ import { RenderToPipeableStreamOptions, renderToPipeableStream } from 'react-dom
 import { StaticRouter } from 'react-router-dom/server';
 import App from './App';
 import { Provider } from 'react-redux';
-import { store } from './store';
+import { setupStore } from './redux/store';
+
+const store = setupStore();
 
 export async function render(url: string, opts: RenderToPipeableStreamOptions) {
-  const stream = renderToPipeableStream(
+  return renderToPipeableStream(
     <Provider store={store}>
       <StaticRouter location={url}>
         <App />
@@ -13,5 +15,4 @@ export async function render(url: string, opts: RenderToPipeableStreamOptions) {
     </Provider>,
     opts
   );
-  return stream;
 }
