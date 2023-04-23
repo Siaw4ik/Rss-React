@@ -1,4 +1,4 @@
-import { defineConfig } from "cypress";
+import { defineConfig } from 'cypress';
 import coverage from '@cypress/code-coverage/task';
 
 export default defineConfig({
