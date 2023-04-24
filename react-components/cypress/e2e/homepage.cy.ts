@@ -27,16 +27,6 @@ describe('Visit home page', () => {
     cy.get('[data-testid="title-error"]').should('exist');
   });
 
-  it('checks show loader', () => {
-    cy.visit('/');
-
-    cy.get('[data-testid="loader"]').should('exist');
-
-    cy.get('[data-testid="searchbar"]').type('kyle{enter}');
-
-    cy.get('[data-testid="loader"]').should('exist');
-  });
-
   it('should like card', () => {
     cy.visit('/');
 

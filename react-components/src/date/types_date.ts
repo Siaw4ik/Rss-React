@@ -44,7 +44,6 @@ export interface RickMortiResponse {
 
 export interface CardProps {
   person: Person;
-  onShowDetails: () => void;
 }
 
 export interface CardDetailsProps {
@@ -81,9 +80,4 @@ export interface CardFormProps {
 
 export interface FormProps {
   showModalWindow: () => void;
-}
-
-export interface CardListProps {
-  persons: Person[];
-  onShowDetails: () => void;
 }

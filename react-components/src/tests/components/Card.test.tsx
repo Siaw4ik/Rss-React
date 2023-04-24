@@ -52,11 +52,10 @@ const mockPerson: Person = {
 describe('test Card', () => {
   const store = setupStore();
   it('renders card', () => {
-    const onShowDetails = vi.fn();
     const mockDispatch = vi.spyOn(store, 'dispatch');
     render(
       <Provider store={store}>
-        <Card person={mockPerson} key={1} onShowDetails={onShowDetails} />
+        <Card person={mockPerson} key={1} />
       </Provider>
     );
     const card = screen.getByTestId('card');
@@ -66,7 +65,6 @@ describe('test Card', () => {
 
     fireEvent.click(cardDescription);
 
-    expect(onShowDetails).toHaveBeenCalledTimes(1);
     expect(mockDispatch).toHaveBeenCalledWith(setId(mockPerson.id));
   });
 });

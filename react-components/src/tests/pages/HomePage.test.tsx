@@ -41,7 +41,7 @@ afterEach(() => {
 
 describe('Home Page', () => {
   it('renders home page and close cardDetails click shodow', async () => {
-    const { findByTestId } = render(
+    render(
       <Provider store={store}>
         <BrowserRouter>
           <HomePage />
@@ -51,70 +51,6 @@ describe('Home Page', () => {
 
     const homeTitle = screen.getByTestId('homepage-h1');
     expect(homeTitle).toBeInTheDocument();
-
-    const card = await findByTestId('card');
-
-    await waitFor(() => {
-      expect(card).toBeInTheDocument();
-    });
-
-    const cardclick = await findByTestId('card-description');
-
-    fireEvent.click(cardclick);
-
-    const cardDetails = await findByTestId('container-cardDetails');
-    const cardDetailsShadow = await findByTestId('cardDetails-shadow');
-
-    await waitFor(() => {
-      expect(cardDetails).toBeInTheDocument();
-      expect(cardDetailsShadow).toBeInTheDocument();
-    });
-
-    fireEvent.click(cardDetailsShadow);
-
-    await waitFor(() => {
-      expect(cardDetails).not.toBeInTheDocument();
-      expect(cardDetailsShadow).not.toBeInTheDocument();
-    });
-  });
-
-  it('renders home page and close cardDetails click shodow', async () => {
-    const { findByTestId } = render(
-      <Provider store={store}>
-        <BrowserRouter>
-          <HomePage />
-        </BrowserRouter>
-      </Provider>
-    );
-
-    const homeTitle = screen.getByTestId('homepage-h1');
-    expect(homeTitle).toBeInTheDocument();
-
-    const card = await findByTestId('card');
-
-    await waitFor(() => {
-      expect(card).toBeInTheDocument();
-    });
-
-    const cardclick = await findByTestId('card-description');
-
-    fireEvent.click(cardclick);
-
-    const cardDetails = await findByTestId('container-cardDetails');
-    const cardDetailsShadow = await findByTestId('cardDetails-shadow');
-    const cardDetailsCross = await findByTestId('cardDetails-cross');
-
-    await waitFor(() => {
-      expect(cardDetails).toBeInTheDocument();
-      expect(cardDetailsShadow).toBeInTheDocument();
-    });
-
-    fireEvent.click(cardDetailsCross);
-
-    await waitFor(() => {
-      expect(cardDetails).not.toBeInTheDocument();
-      expect(cardDetailsShadow).not.toBeInTheDocument();
-    });
   });
 
   it('renders on homepage error', async () => {

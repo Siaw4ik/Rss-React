@@ -1,5 +1,6 @@
 .cardDetails-shadow{
-  position: absolute;
+  position: fixed;
+  left: 0;
   top: 0;
   z-index: 10;
   background-color: rgba(0, 0, 0, 0.632);
@@ -124,6 +125,7 @@
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-gap: 5px;
+  position: relative;
 }
 
 .card{
@@ -183,6 +185,9 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: absolute;
+  left: 0;
+  right: 0;
 }
 
 .container-errors h3{
@@ -211,9 +216,12 @@
 .lds-spinner {
   color: official;
   display: inline-block;
-  position: relative;
+  position: absolute;
+  left: 0;
+  right: 0;
   width: 80px;
   height: 80px;
+  margin: auto;
 }
 .lds-spinner div {
   transform-origin: 40px 40px;

@@ -1,13 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card } from './Card';
-import { CardListProps } from '../date/types_date';
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
+import {
+  useGetPersonsByNameQuery /* useGetPersonsStartQuery */,
+} from '../redux/services/rick_morti';
+import { Error } from './Error';
+import { Loader } from './Loader';
 
-export function CardList({ persons, onShowDetails }: CardListProps) {
+export function CardList() {
+  const inputValue = useSelector((state: RootState) => state.search.inputValue);
+  const [value, setValue] = useState('');
+
+  useEffect(() => {
+    setValue(inputValue);
+  }, [inputValue]);
+
+  const { data, isError, isFetching } = useGetPersonsByNameQuery(value);
+
   return (
     <div data-testid="container_cards" className="container_cards">
-      {persons.map((person) => (
-        <Card person={person} key={person.id} onShowDetails={onShowDetails} />
-      ))}
+      {isFetching ? (
+        <Loader />
+      ) : isError ? (
+        <Error onMini={false} />
+      ) : (
+        data?.results.map((person) => <Card person={person} key={person.id} />)
+      )}
     </div>
   );
 }
