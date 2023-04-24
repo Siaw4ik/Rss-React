@@ -11,7 +11,7 @@ type CustomWindowInstanse = Window &
 
 const store = setupStore((window as CustomWindowInstanse).__PRELOADED_STATE__);
 
-// delete (window as CustomWindowInstanse).__PRELOADED_STATE__;
+delete (window as CustomWindowInstanse).__PRELOADED_STATE__;
 
 hydrateRoot(
   document.getElementById('root')!,

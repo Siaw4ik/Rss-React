@@ -4,8 +4,8 @@ import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import { SearchBar } from '../components/SearchBar';
 import { CardDetails } from '../components/CardDetails';
-import { Error } from '../components/Error';
-import { Loader } from '../components/Loader';
+/* import { Error } from '../components/Error';
+import { Loader } from '../components/Loader'; */
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import {
@@ -22,8 +22,8 @@ export function HomePage() {
 
   const {
     data: dataSearch,
-    error: errorSearch,
-    isFetching: isFetchingSearch,
+    /* error: errorSearch,
+    isFetching: isFetchingSearch, */
   } = useGetPersonsByNameQuery(inputValue);
 
   if (dataSearch) {
@@ -54,13 +54,14 @@ export function HomePage() {
           <div className="container_home">
             <h2 data-testid="homepage-h1">Library Rick and Morty</h2>
             <SearchBar />
-            {isFetchingSearch ? (
+            <CardList persons={persons} onShowDetails={() => setIsShow(true)} />
+            {/* {isFetchingSearch ? (
               <Loader />
             ) : errorSearch ? (
               <Error onMini={false} />
             ) : (
               <CardList persons={persons} onShowDetails={() => setIsShow(true)} />
-            )}
+            )} */}
           </div>
         </main>
       </div>
