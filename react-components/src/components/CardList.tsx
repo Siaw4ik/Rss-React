@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react';
 import { Card } from './Card';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
@@ -10,13 +9,8 @@ import { Loader } from './Loader';
 
 export function CardList() {
   const inputValue = useSelector((state: RootState) => state.search.inputValue);
-  const [value, setValue] = useState('');
 
-  useEffect(() => {
-    setValue(inputValue);
-  }, [inputValue]);
-
-  const { data, isError, isFetching } = useGetPersonsByNameQuery(value);
+  const { data, isError, isFetching } = useGetPersonsByNameQuery(inputValue);
 
   return (
     <div data-testid="container_cards" className="container_cards">
